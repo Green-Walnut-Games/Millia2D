@@ -5,28 +5,28 @@ using Windowing;
 
 public class MilliaGame
 {
-    protected Window _window;
+    // temporarily allow access to _window
+    public Window Window { get; private set; }
 
     public MilliaGame(int width = 800, int height = 600, string title = "Millia2D Game")
     {
-        _window = new Window(width, height, title);
+        Window = new Window(width, height, title);
 
-        using (_window)
+        using (Window.otk_Window)
         {
-            _window.UpdateFrame += Update;
+            Window.otk_Window.UpdateFrame += Update;
 
-            _window.Run();
+            Window.otk_Window.Run();
         }
-    }
-
-    public void CloseWindow()
-    {
-        _window.Dispose();
-        _window.Close();
     }
 
     /// <summary>
     /// Game logic ran every frame.
     /// </summary>
     public virtual void Update(FrameEventArgs eventArgs) { }
+
+    /// <summary>
+    /// Game logic ran once at the start of the game.
+    /// </summary>
+    public virtual void Start() { }
 }

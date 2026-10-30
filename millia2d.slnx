@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/Millia2D/">
+    <Project Path="Millia2D/millia2d.csproj" />
+  </Folder>
+  <Folder Name="/Samples/" />
+  <Folder Name="/Samples/Test/">
+    <Project Path="Samples/Test/test.csproj" />
+  </Folder>
+  <Project Path="tests/tests.csproj" />
+</Solution>

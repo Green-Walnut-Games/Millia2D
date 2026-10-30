@@ -1,0 +1,14 @@
+on:
+    pull_request:
+        types: [opened, synchronize, reopened]
+
+permissions:
+  actions: read
+  
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - name: Test
+      run: dotnet test
