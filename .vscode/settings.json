@@ -12,5 +12,6 @@
     },
     "[csharp]": {
         "editor.defaultFormatter": "csharpier.csharpier-vscode"
-    }
+    },
+    "editor.inlineSuggest.enabled": false
 }

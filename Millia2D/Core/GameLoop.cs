@@ -1,4 +1,4 @@
-namespace Millia2D.Core;
+namespace Millia2D;
 
 public static class GameLoop
 {
