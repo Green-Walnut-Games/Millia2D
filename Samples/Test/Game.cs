@@ -7,7 +7,7 @@ public class Game : MilliaGame
     public override void Start()
     {
         // Example: new scene and player entity
-        Scene mainScene = new();
+        Scene mainScene = new("Main world");
         Entity player = new();
 
         mainScene.AddEntity(player);
