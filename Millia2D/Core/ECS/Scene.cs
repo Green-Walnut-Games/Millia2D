@@ -18,7 +18,7 @@ public class Scene
     /// <summary>
     /// List of all entities inside this scene.
     /// </summary>
-    public List<Entity> Entities { get; private set; } = new();
+    public List<Actor> Entities { get; private set; } = new();
 
     public Scene(string sceneName)
     {
@@ -27,21 +27,21 @@ public class Scene
     }
 
     /// <summary>
-    /// Adds an entity to the scene.
+    /// Adds an actor to the scene.
     /// </summary>
-    /// <param name="entity"></param>
-    public void AddEntity(Entity entity)
+    /// <param name="actor"></param>
+    public void AddActor(Actor actor)
     {
-        Entities.Add(entity);
+        Entities.Add(actor);
     }
 
     /// <summary>
-    /// Removes an entity from the scene.
+    /// Removes an actor from the scene.
     /// </summary>
-    /// <param name="entity"></param>
-    public void RemoveEntity(Entity entity)
+    /// <param name="actor"></param>
+    public void RemoveActor(Actor actor)
     {
-        Entities.Remove(entity);
+        Entities.Remove(actor);
     }
 
     public override string ToString()

@@ -45,4 +45,24 @@ public class Actor
     {
         Components.Remove(component);
     }
+
+    /// <summary>
+    /// Return the first component of the type specified as the generic type.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public T GetComponent<T>()
+    {
+        return Components.First(comp => comp is T);
+    }
+
+    /// <summary>
+    /// Return all components that match the type generic.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public IEnumerable<T> GetComponents<T>()
+    {
+        return Components.Where(comp => comp is T);
+    }
 }
