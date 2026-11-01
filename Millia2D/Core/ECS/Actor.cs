@@ -20,7 +20,7 @@ public class Actor
     /// <summary>
     /// Hashset of components attached to this actor.
     /// </summary>
-    public HashSet<Component> Components { get; private set; }
+    public HashSet<Component> Components { get; private set; } = new();
 
     public Actor(string actorName = "New Actor")
     {
@@ -52,8 +52,9 @@ public class Actor
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public T GetComponent<T>()
+        where T : Component
     {
-        return Components.First(comp => comp is T);
+        return Components.OfType<T>().First();
     }
 
     /// <summary>
@@ -61,8 +62,9 @@ public class Actor
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public IEnumerable<T> GetComponents<T>()
+    public IEnumerable<Component> GetComponents<T>()
+        where T : Component
     {
-        return Components.Where(comp => comp is T);
+        return Components.OfType<T>();
     }
 }
