@@ -6,11 +6,11 @@ public class Game : MilliaGame
 {
     public override void Start()
     {
-        // Example: new scene and player entity
+        // Example: new scene and player actor
         Scene mainScene = new("Main world");
-        Entity player = new();
+        Actor player = new();
 
-        mainScene.AddEntity(player);
+        mainScene.AddActor(player);
     }
 
     public override void Update(FrameEventArgs eventArgs)

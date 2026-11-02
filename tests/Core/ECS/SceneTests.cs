@@ -13,29 +13,29 @@ public class SceneTests
     }
 
     [Test]
-    public void AddEntityToScene()
+    public void AddActorToScene()
     {
-        Entity entity = new();
+        Actor actor = new();
 
-        activeScene.AddEntity(entity);
+        activeScene.AddActor(actor);
 
         Assert.That(
             activeScene.Entities.Count,
             Is.EqualTo(1),
-            "Should detect an entity in the list once added"
+            "Should detect an Actor in the list once added"
         );
     }
 
     [Test]
-    public void RemoveEntityFromScene()
+    public void RemoveActorFromScene()
     {
-        Entity entity = new();
+        Actor Actor = new();
 
-        activeScene.AddEntity(entity);
+        activeScene.AddActor(Actor);
 
         Assert.That(activeScene.Entities.Count, Is.EqualTo(1));
 
-        activeScene.RemoveEntity(entity);
+        activeScene.RemoveActor(Actor);
 
         Assert.That(activeScene.Entities.Count, Is.EqualTo(0));
     }

@@ -20,7 +20,7 @@ public class Actor
     /// <summary>
     /// Hashset of components attached to this actor.
     /// </summary>
-    public HashSet<Component> Components { get; private set; }
+    public HashSet<Component> Components { get; private set; } = new();
 
     public Actor(string actorName = "New Actor")
     {
@@ -44,5 +44,27 @@ public class Actor
     public void RemoveComponent(Component component)
     {
         Components.Remove(component);
+    }
+
+    /// <summary>
+    /// Return the first component of the type specified as the generic type.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public T GetComponent<T>()
+        where T : Component
+    {
+        return Components.OfType<T>().First();
+    }
+
+    /// <summary>
+    /// Return all components that match the type generic.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public IEnumerable<Component> GetComponents<T>()
+        where T : Component
+    {
+        return Components.OfType<T>();
     }
 }
