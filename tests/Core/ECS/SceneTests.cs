@@ -20,7 +20,7 @@ public class SceneTests
         activeScene.AddActor(actor);
 
         Assert.That(
-            activeScene.Entities.Count,
+            activeScene.Actors.Count,
             Is.EqualTo(1),
             "Should detect an Actor in the list once added"
         );
@@ -33,11 +33,11 @@ public class SceneTests
 
         activeScene.AddActor(Actor);
 
-        Assert.That(activeScene.Entities.Count, Is.EqualTo(1));
+        Assert.That(activeScene.Actors.Count, Is.EqualTo(1));
 
         activeScene.RemoveActor(Actor);
 
-        Assert.That(activeScene.Entities.Count, Is.EqualTo(0));
+        Assert.That(activeScene.Actors.Count, Is.EqualTo(0));
     }
 
     [Test]
