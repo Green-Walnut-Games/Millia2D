@@ -14,4 +14,14 @@ public class Component
     {
         GUID = Guid.NewGuid();
     }
+
+    public virtual void Preload() { }
+
+    public virtual void Load() { }
+
+    public virtual void PhysicsUpdate(double deltaTime) { }
+
+    public virtual void Update(double deltaTime) { }
+
+    public virtual void LateUpdate(double deltaTime) { }
 }

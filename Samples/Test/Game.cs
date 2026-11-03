@@ -4,21 +4,26 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 
 public class Game : MilliaGame
 {
-    public override void Start()
+    public override void Init()
     {
-        // Example: new scene and player actor
-        Scene mainScene = new("Main world");
-        Actor player = new();
+        Scene world = new("World");
 
-        mainScene.AddActor(player);
+        Actor player = new();
+        player.AddComponent(new PlayerClass());
+
+        world.AddActor(player);
+    }
+}
+
+public class PlayerClass : Component
+{
+    public override void PhysicsUpdate(double deltaTime)
+    {
+        Console.WriteLine("Physics update is: " + deltaTime);
     }
 
-    public override void Update(FrameEventArgs eventArgs)
+    public override void Update(double deltaTime)
     {
-        // Temporary until input story is played
-        if (Window.IsKeyPressed(Keys.Escape))
-        {
-            Window.Close();
-        }
+        Console.WriteLine("Normal update is: " + deltaTime);
     }
 }
