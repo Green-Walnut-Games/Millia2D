@@ -22,7 +22,7 @@ public static class Clock
     /// Responsible for incrementing global time counter with the frame time.
     /// </summary>
     /// <param name="deltaTime"></param>
-    public static void Update(double deltaTime)
+    public static void IncrementTimer(double deltaTime)
     {
         totalElapsedTime += deltaTime;
     }

@@ -1,4 +1,9 @@
-﻿namespace Millia2D;
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("tests")]
+
+namespace Millia2D;
 
 using Millia2d.Core;
 using OpenTK.Platform.Windows;
@@ -9,10 +14,18 @@ public class MilliaGame
 {
     public static MilliaGame? GameInstance { get; private set; }
 
-    // temporarily allow access to _window
     public Window Window { get; private set; }
 
     public List<Scene> LoadedScenes { get; private set; } = new();
+
+    internal MilliaGame()
+    {
+        GameInstance = this;
+
+        Init();
+        Preload();
+        Load();
+    }
 
     public MilliaGame(int width = 800, int height = 600, string title = "Millia2D Game")
     {
@@ -98,22 +111,22 @@ public class MilliaGame
 
     internal void UpdateFrame(FrameEventArgs eventArgs)
     {
-        // Time elapsed since last frame is eventArgs.Time
-
-        Clock.Update(eventArgs.Time);
+        Clock.IncrementTimer(eventArgs.Time);
 
         // Handle physics update
         // If more than physics update time has elapsed, we need to run a physics update
-        if (Clock.totalElapsedTime >= lastPhysicsTime + Clock.PhysicsUpdateTime)
+        if (
+            lastPhysicsTime == 0
+            || Clock.totalElapsedTime - lastPhysicsTime >= Clock.PhysicsUpdateTime
+        )
         {
-            double physicsDeltaTime = Clock.totalElapsedTime - lastPhysicsTime;
+            lastPhysicsTime = Clock.totalElapsedTime;
 
             // If time elapsed is more than the physics update time, we update by the difference.
             // This means that if a long time passes between updating physics, when we do get to updating it,
             // we update it by however much time had passed.
+            double physicsDeltaTime = Clock.totalElapsedTime - lastPhysicsTime;
             PhysicsUpdate(physicsDeltaTime);
-
-            lastPhysicsTime = Clock.totalElapsedTime;
         }
 
         Update(eventArgs.Time);

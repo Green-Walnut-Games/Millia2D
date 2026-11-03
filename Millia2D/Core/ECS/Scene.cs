@@ -26,8 +26,6 @@ public class Scene
     {
         GUID = Guid.NewGuid();
         SceneName = sceneName;
-
-        MilliaGame.GameInstance?.AddScene(this);
     }
 
     /// <summary>
