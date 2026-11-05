@@ -12,6 +12,8 @@ public class ResourceStore
 
     public static Dictionary<string, IResourceLoader> ResourceLoaders { get; private set; } = new();
 
+    public static string AssetsPath { get; set; } = "assets";
+
     static ResourceStore()
     {
         Console.WriteLine("Adding new loader for text");
@@ -35,11 +37,13 @@ public class ResourceStore
         Console.WriteLine($"Loaders length is {ResourceLoaders.Count}");
         IResourceLoader loader = ResourceLoaders[extension];
 
-        object returnObject = loader.Load(filePath);
+        string correctedPath = Directory.GetCurrentDirectory() + "/" + filePath;
+
+        object returnObject = loader.Load(correctedPath);
 
         if (returnObject == null)
         {
-            throw new Exception($"Could not load {filePath}");
+            throw new Exception($"Could not load {correctedPath}");
         }
 
         ResourceCache[filePath] = returnObject;

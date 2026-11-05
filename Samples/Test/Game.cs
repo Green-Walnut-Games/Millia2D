@@ -12,7 +12,7 @@ public class Game : MilliaGame
 
         world.AddActor(player);
 
-        string textFromFile = ResourceStore.Load<string>("test.txt");
+        string textFromFile = ResourceStore.Load<string>("assets/test.txt");
 
         Console.WriteLine(textFromFile);
     }

@@ -1,0 +1,9 @@
+<Project>
+  <ItemGroup>
+    <GameAssets Include="$(MSBuildProjectDirectory)\assets\**\*.*" />
+  </ItemGroup>
+  <Target Name="CopyGameAssets" BeforeTargets="Build">
+    <Message Importance="high" Text="Assets found: @(GameAssets)" />
+    <Copy SourceFiles="@(GameAssets)" DestinationFolder="$(TargetDir)\assets\%(RecursiveDir)" />
+  </Target>
+</Project>
