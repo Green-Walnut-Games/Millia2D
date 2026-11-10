@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Millia2d</PackageId>
+    <Description>A game engine focused on high-performance of large numbers of actors.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryURL>https://github.com/Green-Walnut-Games/Millia2D</RepositoryURL>
+    <Version>0.0.1</Version>
+    <Authors>Costin Andrei Patea</Authors>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="OpenTK" Version="4.9.4" />
+  </ItemGroup>
+  <ItemGroup Label="FilesToCopy">
+    <Content Include="Millia2d.targets" Pack="true" PackagePath="build/$(PackageId).targets" />
+    <Content Include="assets\**\*.*" Pack="true" PackagePath="assets">
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+  </ItemGroup>
+</Project>

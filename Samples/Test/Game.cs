@@ -1,6 +1,5 @@
 using Millia2D;
-using OpenTK.Windowing.Common;
-using OpenTK.Windowing.GraphicsLibraryFramework;
+using Millia2D.Resources;
 
 public class Game : MilliaGame
 {
@@ -12,6 +11,10 @@ public class Game : MilliaGame
         player.AddComponent(new PlayerClass());
 
         world.AddActor(player);
+
+        string textFromFile = ResourceStore.Load<string>("assets/test.txt");
+
+        Console.WriteLine(textFromFile);
     }
 }
 

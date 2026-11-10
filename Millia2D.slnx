@@ -1,6 +1,6 @@
 <Solution>
   <Folder Name="/Millia2D/">
-    <Project Path="Millia2D/millia2d.csproj" />
+    <Project Path="Millia2D/Millia2d.csproj" />
   </Folder>
   <Folder Name="/Samples/" />
   <Folder Name="/Samples/Test/">
