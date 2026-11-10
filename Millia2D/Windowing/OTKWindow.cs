@@ -27,13 +27,14 @@ internal class OTKWindow : GameWindow
     };
 
     int VertexBufferObject;
+    int VertexArrayObject;
     Shader shader;
 
     protected override void OnLoad()
     {
         base.OnLoad();
 
-        GL.ClearColor(0.2f, 0.2f, 0.0f, 1.0f);
+        GL.ClearColor(0.2f, 0.2f, 0.5f, 1.0f);
 
         VertexBufferObject = GL.GenBuffer();
         GL.BindBuffer(BufferTarget.ArrayBuffer, VertexBufferObject);
@@ -46,6 +47,20 @@ internal class OTKWindow : GameWindow
         );
 
         shader = new("assets/Shaders/shader.vert", "assets/Shaders/shader.frag");
+
+        VertexArrayObject = GL.GenVertexArray();
+        GL.BindVertexArray(VertexArrayObject);
+
+        GL.BindBuffer(BufferTarget.ArrayBuffer, VertexBufferObject);
+        GL.BufferData(
+            BufferTarget.ArrayBuffer,
+            vertices.Length * sizeof(float),
+            vertices,
+            BufferUsageHint.StaticDraw
+        );
+
+        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
+        GL.EnableVertexArrayAttrib(VertexArrayObject, 0);
     }
 
     protected override void OnUnload()
@@ -62,6 +77,13 @@ internal class OTKWindow : GameWindow
         GL.Clear(ClearBufferMask.ColorBufferBit);
 
         // Swap the area being buffered with the area being drawn
+
+        GL.UseProgram(0);
+
+        shader.Use();
+        GL.BindVertexArray(VertexArrayObject);
+        GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
+
         SwapBuffers();
     }
 
