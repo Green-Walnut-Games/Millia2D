@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup Label="FilesToCopy">
     <Content Include="Millia2d.targets" Pack="true" PackagePath="build/$(PackageId).targets" />
+    <None Include="Assets\Shaders\**\*" Pack="true" PackagePath="build/shaders" />
     <Content Include="assets\**\*.*" Pack="true" PackagePath="assets">
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
