@@ -1,4 +1,5 @@
 using Millia2D;
+using Millia2d.Rendering;
 using Millia2D.Resources;
 
 public class Game : MilliaGame
@@ -9,17 +10,22 @@ public class Game : MilliaGame
 
         Actor player = new();
         player.AddComponent(new PlayerClass());
+        Sprite sprite = new();
+        player.AddComponent(sprite);
 
         world.AddActor(player);
-
-        string textFromFile = ResourceStore.Load<string>("assets/test.txt");
-
-        Console.WriteLine(textFromFile);
+        AddScene(world);
     }
 }
 
 public class PlayerClass : Component
 {
+    public override void Preload()
+    {
+        base.Preload();
+        Console.WriteLine("Player preload");
+    }
+
     public override void PhysicsUpdate(double deltaTime)
     {
         Console.WriteLine("Physics update is: " + deltaTime);

@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 namespace Millia2D;
 
 using Millia2d.Core;
+using Millia2d.Rendering;
 using OpenTK.Platform.Windows;
 using OpenTK.Windowing.Common;
 using Windowing;
@@ -15,6 +16,8 @@ public class MilliaGame
     public static MilliaGame? GameInstance { get; private set; }
 
     public Window Window { get; private set; }
+
+    public Renderer Renderer { get; private set; }
 
     public List<Scene> LoadedScenes { get; private set; } = new();
 
@@ -30,6 +33,8 @@ public class MilliaGame
     public MilliaGame(int width = 800, int height = 600, string title = "Millia2D Game")
     {
         GameInstance = this;
+
+        Renderer = new();
 
         Window = new Window(width, height, title);
 

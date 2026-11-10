@@ -35,6 +35,7 @@ public class Actor
     public void AddComponent(Component component)
     {
         Components.Add(component);
+        component.Actor = this;
     }
 
     /// <summary>
@@ -44,6 +45,7 @@ public class Actor
     public void RemoveComponent(Component component)
     {
         Components.Remove(component);
+        component.Actor = null;
     }
 
     /// <summary>
