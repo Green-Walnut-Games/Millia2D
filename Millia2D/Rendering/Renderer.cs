@@ -1,6 +1,8 @@
 using Millia2D;
 using Millia2d.Rendering.Shaders;
 using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
+using Vector3 = Millia2d.Transformations.Vector3;
 
 namespace Millia2d.Rendering;
 
@@ -37,15 +39,17 @@ public class Renderer
 
     private void LoadSprite(Sprite sprite)
     {
+        Shader activeShader;
         // Picks correct shader for sprite
         if (sprite.Texture != null)
         {
-            TextureShader.Use();
+            activeShader = TextureShader;
         }
         else
         {
-            ColorShader.Use();
+            activeShader = ColorShader;
         }
+        activeShader.Use();
 
         VertexBufferObject = GL.GenBuffer();
         VertexArrayObject = GL.GenVertexArray();
@@ -74,22 +78,27 @@ public class Renderer
 
         if (sprite.Texture != null)
         {
-            int texture0Location = TextureShader.GetUniformLocation("texture0");
-            GL.Uniform1(texture0Location, 0);
-
-            GL.BindTexture(TextureTarget.Texture2D, sprite.Texture.Handle);
-            int texCoordLocation = TextureShader.GetAttribLocation("aTexCoord");
-
-            GL.EnableVertexAttribArray(texCoordLocation);
-            GL.VertexAttribPointer(
-                texCoordLocation,
-                2,
-                VertexAttribPointerType.Float,
-                false,
-                5 * sizeof(float),
-                3 * sizeof(float)
-            );
+            ApplyTextureVAO(sprite);
         }
+    }
+
+    private void ApplyTextureVAO(Sprite sprite)
+    {
+        int texture0Location = TextureShader.GetUniformLocation("texture0");
+        GL.Uniform1(texture0Location, 0);
+
+        GL.BindTexture(TextureTarget.Texture2D, sprite.Texture.Handle);
+        int texCoordLocation = TextureShader.GetAttribLocation("aTexCoord");
+
+        GL.EnableVertexAttribArray(texCoordLocation);
+        GL.VertexAttribPointer(
+            texCoordLocation,
+            2,
+            VertexAttribPointerType.Float,
+            false,
+            5 * sizeof(float),
+            3 * sizeof(float)
+        );
     }
 
     public void OnRenderFrame()
@@ -102,14 +111,19 @@ public class Renderer
 
     private void RenderFrameSprite(Sprite sprite)
     {
+        Shader activeShader;
+        // Picks correct shader for sprite
         if (sprite.Texture != null)
         {
-            TextureShader.Use();
+            activeShader = TextureShader;
         }
         else
         {
-            ColorShader.Use();
+            activeShader = ColorShader;
         }
+        activeShader.Use();
+
+        ApplyTransformations(sprite, activeShader);
 
         GL.DrawElements(
             PrimitiveType.Triangles,
@@ -117,6 +131,46 @@ public class Renderer
             DrawElementsType.UnsignedInt,
             0
         );
+    }
+
+    private static void ApplyTransformations(Sprite sprite, Shader activeShader)
+    {
+        float gameHeight = 10;
+
+        float windowHeight = MilliaGame.GameInstance.Window.Height;
+        float windowWidth = MilliaGame.GameInstance.Window.Width;
+
+        float aspect = windowWidth / windowHeight;
+        float gameWidth = aspect * gameHeight;
+
+        Matrix4 orthographicProjection = Matrix4.CreateOrthographic(
+            gameWidth,
+            gameHeight,
+            -500f,
+            500f
+        );
+
+        Matrix4 view = Matrix4.CreateTranslation(0, 0, 0);
+
+        Vector3 spriteRotation = sprite.Actor.Transform.Rotation;
+        Matrix4 rotationZ = Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(spriteRotation.Z));
+        Matrix4 rotationY = Matrix4.CreateRotationY(MathHelper.DegreesToRadians(spriteRotation.Y));
+        Matrix4 rotationX = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(spriteRotation.X));
+
+        Vector3 spriteScale = sprite.Actor.Transform.Scale;
+        Matrix4 scale = Matrix4.CreateScale(spriteScale.X, spriteScale.Y, spriteScale.Z);
+
+        Vector3 spritePosition = sprite.Actor.Transform.Position;
+        Matrix4 position = Matrix4.CreateTranslation(
+            spritePosition.X,
+            spritePosition.Y,
+            spritePosition.Z
+        );
+
+        Matrix4 finalTrans = scale * rotationZ * position * view * orthographicProjection;
+
+        int transformLocation = GL.GetUniformLocation(activeShader.Handle, "transform");
+        GL.UniformMatrix4(transformLocation, true, ref finalTrans);
     }
 
     public void OnUnload()

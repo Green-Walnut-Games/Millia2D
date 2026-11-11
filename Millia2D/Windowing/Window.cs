@@ -8,6 +8,9 @@ public class Window
 {
     internal OTKWindow otk_Window;
 
+    public float Width => otk_Window.Size.X;
+    public float Height => otk_Window.Size.Y;
+
     public Window(int width, int height, string title)
     {
         otk_Window = new(

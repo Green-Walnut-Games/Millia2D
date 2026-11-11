@@ -5,7 +5,7 @@ namespace Millia2d.Rendering.Shaders;
 
 public class Shader : IDisposable
 {
-    int Handle;
+    public int Handle { get; private set; }
 
     // TODO: Add documentation here
     public Shader(string vertexPath, string fragmentPath)

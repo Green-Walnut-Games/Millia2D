@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Millia2d.Transformations;
 
 namespace Millia2D;
 
@@ -21,6 +22,8 @@ public class Actor
     /// Hashset of components attached to this actor.
     /// </summary>
     public HashSet<Component> Components { get; private set; } = new();
+
+    public Transform Transform { get; } = new();
 
     public Actor(string actorName = "New Actor")
     {
