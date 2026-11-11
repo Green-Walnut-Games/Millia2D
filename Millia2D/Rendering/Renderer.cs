@@ -13,12 +13,44 @@ public class Renderer
     int ElementBufferObject;
     Shader ColorShader;
     Shader TextureShader;
-
     public HashSet<Sprite> Sprites = new();
+
+    float[] vertices =
+    {
+        0.5f,
+        0.5f,
+        0.0f,
+        1.0f,
+        1.0f, // top right
+        0.5f,
+        -0.5f,
+        0.0f,
+        1.0f,
+        0.0f, // bottom right
+        -0.5f,
+        -0.5f,
+        0.0f,
+        0.0f,
+        0.0f, // bottom left
+        -0.5f,
+        0.5f,
+        0.0f,
+        0.0f,
+        1.0f, // top left
+    };
+
+    uint[] indices =
+    {
+        0,
+        1,
+        3, // first triangle
+        1,
+        2,
+        3, // second triangle
+    };
 
     public void RegisterSprite(Sprite sprite)
     {
-        Console.WriteLine("Registered sprite");
         Sprites.Add(sprite);
     }
 
@@ -30,64 +62,43 @@ public class Renderer
             "assets/Shaders/texture-shader.frag"
         );
 
-        for (int i = 0; i < Sprites.Count; i++)
-        {
-            Sprite sprite = Sprites.ElementAt(i);
-            LoadSprite(sprite);
-        }
-    }
-
-    private void LoadSprite(Sprite sprite)
-    {
-        Shader activeShader;
-        // Picks correct shader for sprite
-        if (sprite.Texture != null)
-        {
-            activeShader = TextureShader;
-        }
-        else
-        {
-            activeShader = ColorShader;
-        }
-        activeShader.Use();
-
         VertexBufferObject = GL.GenBuffer();
         VertexArrayObject = GL.GenVertexArray();
+        ElementBufferObject = GL.GenBuffer();
 
+        SetupVAOs();
+    }
+
+    private void SetupVAOs()
+    {
         GL.BindVertexArray(VertexArrayObject);
 
         GL.BindBuffer(BufferTarget.ArrayBuffer, VertexBufferObject);
         GL.BufferData(
             BufferTarget.ArrayBuffer,
-            sprite.vertices.Length * sizeof(float),
-            sprite.vertices,
+            vertices.Length * sizeof(float),
+            vertices,
             BufferUsageHint.StaticDraw
         );
 
-        ElementBufferObject = GL.GenBuffer();
         GL.BindBuffer(BufferTarget.ElementArrayBuffer, ElementBufferObject);
         GL.BufferData(
             BufferTarget.ElementArrayBuffer,
-            sprite.indices.Length * sizeof(uint),
-            sprite.indices,
+            indices.Length * sizeof(uint),
+            indices,
             BufferUsageHint.StaticDraw
         );
 
         GL.EnableVertexAttribArray(0);
         GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 5 * sizeof(float), 0);
-
-        if (sprite.Texture != null)
-        {
-            ApplyTextureVAO(sprite);
-        }
+        ApplyTextureVAO();
     }
 
-    private void ApplyTextureVAO(Sprite sprite)
+    private void ApplyTextureVAO()
     {
         int texture0Location = TextureShader.GetUniformLocation("texture0");
         GL.Uniform1(texture0Location, 0);
 
-        GL.BindTexture(TextureTarget.Texture2D, sprite.Texture.Handle);
         int texCoordLocation = TextureShader.GetAttribLocation("aTexCoord");
 
         GL.EnableVertexAttribArray(texCoordLocation);
@@ -103,9 +114,12 @@ public class Renderer
 
     public void OnRenderFrame()
     {
+        GL.BindVertexArray(VertexArrayObject);
         for (int i = 0; i < Sprites.Count; i++)
         {
-            RenderFrameSprite(Sprites.ElementAt(i));
+            Sprite sprite = Sprites.ElementAt(i);
+
+            RenderFrameSprite(sprite);
         }
     }
 
@@ -123,14 +137,12 @@ public class Renderer
         }
         activeShader.Use();
 
+        if (sprite.Texture != null)
+            GL.BindTexture(TextureTarget.Texture2D, sprite.Texture.Handle);
+
         ApplyTransformations(sprite, activeShader);
 
-        GL.DrawElements(
-            PrimitiveType.Triangles,
-            sprite.indices.Length,
-            DrawElementsType.UnsignedInt,
-            0
-        );
+        GL.DrawElements(PrimitiveType.Triangles, indices.Length, DrawElementsType.UnsignedInt, 0);
     }
 
     private static void ApplyTransformations(Sprite sprite, Shader activeShader)
