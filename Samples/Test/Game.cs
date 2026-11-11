@@ -10,7 +10,11 @@ public class Game : MilliaGame
 
         Actor player = new();
         player.AddComponent(new PlayerClass());
+
+        Texture texture = new("assets/picture.png");
         Sprite sprite = new();
+        sprite.Texture = texture;
+
         player.AddComponent(sprite);
 
         world.AddActor(player);
@@ -24,15 +28,5 @@ public class PlayerClass : Component
     {
         base.Preload();
         Console.WriteLine("Player preload");
-    }
-
-    public override void PhysicsUpdate(double deltaTime)
-    {
-        Console.WriteLine("Physics update is: " + deltaTime);
-    }
-
-    public override void Update(double deltaTime)
-    {
-        Console.WriteLine("Normal update is: " + deltaTime);
     }
 }

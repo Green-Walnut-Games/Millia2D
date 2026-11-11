@@ -90,4 +90,14 @@ public class Shader : IDisposable
     {
         GL.UseProgram(Handle);
     }
+
+    public int GetAttribLocation(string attribName)
+    {
+        return GL.GetAttribLocation(Handle, attribName);
+    }
+
+    public int GetUniformLocation(string uniformName)
+    {
+        return GL.GetUniformLocation(Handle, uniformName);
+    }
 }

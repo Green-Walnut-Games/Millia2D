@@ -9,7 +9,8 @@ public class Renderer
     int VertexBufferObject;
     int VertexArrayObject;
     int ElementBufferObject;
-    Shader shader;
+    Shader ColorShader;
+    Shader TextureShader;
 
     public HashSet<Sprite> Sprites = new();
 
@@ -21,7 +22,12 @@ public class Renderer
 
     public void OnLoad()
     {
-        shader = new("assets/Shaders/shader.vert", "assets/Shaders/shader.frag");
+        ColorShader = new("assets/Shaders/color-shader.vert", "assets/Shaders/color-shader.frag");
+        TextureShader = new(
+            "assets/Shaders/texture-shader.vert",
+            "assets/Shaders/texture-shader.frag"
+        );
+
         for (int i = 0; i < Sprites.Count; i++)
         {
             Sprite sprite = Sprites.ElementAt(i);
@@ -31,19 +37,19 @@ public class Renderer
 
     private void LoadSprite(Sprite sprite)
     {
+        // Picks correct shader for sprite
+        if (sprite.Texture != null)
+        {
+            TextureShader.Use();
+        }
+        else
+        {
+            ColorShader.Use();
+        }
+
         VertexBufferObject = GL.GenBuffer();
-        GL.BindBuffer(BufferTarget.ArrayBuffer, VertexBufferObject);
-
-        GL.BufferData(
-            BufferTarget.ArrayBuffer,
-            sprite.vertices.Length * sizeof(float),
-            sprite.vertices,
-            BufferUsageHint.StaticDraw
-        );
-
-        shader = new("assets/Shaders/shader.vert", "assets/Shaders/shader.frag");
-
         VertexArrayObject = GL.GenVertexArray();
+
         GL.BindVertexArray(VertexArrayObject);
 
         GL.BindBuffer(BufferTarget.ArrayBuffer, VertexBufferObject);
@@ -63,29 +69,48 @@ public class Renderer
             BufferUsageHint.StaticDraw
         );
 
-        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
-        GL.EnableVertexArrayAttrib(VertexArrayObject, 0);
+        GL.EnableVertexAttribArray(0);
+        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 5 * sizeof(float), 0);
+
+        if (sprite.Texture != null)
+        {
+            int texture0Location = TextureShader.GetUniformLocation("texture0");
+            GL.Uniform1(texture0Location, 0);
+
+            GL.BindTexture(TextureTarget.Texture2D, sprite.Texture.Handle);
+            int texCoordLocation = TextureShader.GetAttribLocation("aTexCoord");
+
+            GL.EnableVertexAttribArray(texCoordLocation);
+            GL.VertexAttribPointer(
+                texCoordLocation,
+                2,
+                VertexAttribPointerType.Float,
+                false,
+                5 * sizeof(float),
+                3 * sizeof(float)
+            );
+        }
     }
 
     public void OnRenderFrame()
     {
-        // Swap the area being buffered with the area being drawn
-
-        GL.UseProgram(0);
-
-        shader.Use();
-        GL.BindVertexArray(VertexArrayObject);
-        // GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
-
         for (int i = 0; i < Sprites.Count; i++)
         {
-            Sprite sprite = Sprites.ElementAt(i);
-            RenderFrameSprite(sprite);
+            RenderFrameSprite(Sprites.ElementAt(i));
         }
     }
 
     private void RenderFrameSprite(Sprite sprite)
     {
+        if (sprite.Texture != null)
+        {
+            TextureShader.Use();
+        }
+        else
+        {
+            ColorShader.Use();
+        }
+
         GL.DrawElements(
             PrimitiveType.Triangles,
             sprite.indices.Length,
@@ -96,6 +121,7 @@ public class Renderer
 
     public void OnUnload()
     {
-        shader.Dispose();
+        ColorShader.Dispose();
+        TextureShader.Dispose();
     }
 }
