@@ -13,7 +13,7 @@ public class Renderer
     int ElementBufferObject;
     Shader ColorShader;
     Shader TextureShader;
-    public HashSet<Sprite> Sprites = new();
+    internal HashSet<Sprite> Sprites = new();
 
     float[] vertices =
     {
@@ -49,12 +49,12 @@ public class Renderer
         3, // second triangle
     };
 
-    public void RegisterSprite(Sprite sprite)
+    internal void RegisterSprite(Sprite sprite)
     {
         Sprites.Add(sprite);
     }
 
-    public void OnLoad()
+    internal void OnLoad()
     {
         ColorShader = new("assets/Shaders/color-shader.vert", "assets/Shaders/color-shader.frag");
         TextureShader = new(
@@ -112,7 +112,7 @@ public class Renderer
         );
     }
 
-    public void OnRenderFrame()
+    internal void OnRenderFrame()
     {
         GL.BindVertexArray(VertexArrayObject);
         for (int i = 0; i < Sprites.Count; i++)
@@ -185,7 +185,7 @@ public class Renderer
         GL.UniformMatrix4(transformLocation, true, ref finalTrans);
     }
 
-    public void OnUnload()
+    internal void OnUnload()
     {
         ColorShader.Dispose();
         TextureShader.Dispose();
