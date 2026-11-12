@@ -19,6 +19,6 @@
     <Content Include="assets\**\*.*" Pack="true" PackagePath="assets">
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
-    <None Include="Assets\Shaders\**\*" Pack="true" PackagePath="build/shaders" />
+    <None Include="assets\Shaders\**\*" Pack="true" PackagePath="build/shaders" />
   </ItemGroup>
 </Project>
