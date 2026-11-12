@@ -23,7 +23,7 @@ public class Game : MilliaGame
         cats.AddComponent(new CatClass());
         Texture catsTexture = new("assets/cats.png");
         Sprite catsSprite = new();
-        // catsSprite.Texture = catsTexture;
+        catsSprite.Texture = catsTexture;
         cats.AddComponent(catsSprite);
 
         world.AddActor(cats);
