@@ -12,11 +12,13 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="OpenTK" Version="4.9.4" />
+    <PackageReference Include="StbImageSharp" Version="*" />
   </ItemGroup>
   <ItemGroup Label="FilesToCopy">
     <Content Include="Millia2d.targets" Pack="true" PackagePath="build/$(PackageId).targets" />
     <Content Include="assets\**\*.*" Pack="true" PackagePath="assets">
       <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
+    <None Include="assets\Shaders\**\*" Pack="true" PackagePath="build/shaders" />
   </ItemGroup>
 </Project>

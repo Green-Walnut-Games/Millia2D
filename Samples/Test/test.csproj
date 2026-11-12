@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Millia2D\Millia2D.csproj" />
+    <ProjectReference Include="../../Millia2D/Millia2d.csproj" />
   </ItemGroup>
-  <Import Project="..\..\Millia2D\Millia2d.targets" />
+  <Import Project="../../Millia2D\Millia2d.targets" />
 </Project>

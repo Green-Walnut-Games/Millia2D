@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Millia2d.Transformations;
 
 namespace Millia2D;
 
@@ -22,6 +23,8 @@ public class Actor
     /// </summary>
     public HashSet<Component> Components { get; private set; } = new();
 
+    public Transform Transform { get; } = new();
+
     public Actor(string actorName = "New Actor")
     {
         GUID = Guid.NewGuid();
@@ -35,6 +38,7 @@ public class Actor
     public void AddComponent(Component component)
     {
         Components.Add(component);
+        component.Actor = this;
     }
 
     /// <summary>
@@ -44,6 +48,7 @@ public class Actor
     public void RemoveComponent(Component component)
     {
         Components.Remove(component);
+        component.Actor = null;
     }
 
     /// <summary>

@@ -1,3 +1,5 @@
+using System.Reflection.Metadata;
+
 namespace Millia2D;
 
 /// <summary>
@@ -9,6 +11,8 @@ public class Component
     /// Unique ID.
     /// </summary>
     public Guid GUID { get; private set; }
+
+    public Actor? Actor { get; internal set; }
 
     public Component()
     {

@@ -1,3 +1,4 @@
+using Millia2d.Windowing;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
@@ -5,7 +6,10 @@ namespace Millia2D.Windowing;
 
 public class Window
 {
-    internal GameWindow otk_Window;
+    internal OTKWindow otk_Window;
+
+    public float Width => otk_Window.Size.X;
+    public float Height => otk_Window.Size.Y;
 
     public Window(int width, int height, string title)
     {
