@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("tests")]
 
@@ -7,8 +6,8 @@ namespace Millia2D;
 
 using Millia2d;
 using Millia2d.Core;
+using Millia2d.Profiling;
 using Millia2d.Rendering;
-using OpenTK.Platform.Windows;
 using OpenTK.Windowing.Common;
 using Windowing;
 
@@ -50,6 +49,17 @@ public class MilliaGame
 
             Window.otk_Window.Run();
         }
+
+        Unload();
+
+        CleanupGame();
+    }
+
+    public virtual void Unload() { }
+
+    private void CleanupGame()
+    {
+        Log.Info(Profiler.Report());
     }
 
     public virtual void Init() { }
@@ -134,6 +144,8 @@ public class MilliaGame
             double physicsDeltaTime = Clock.totalElapsedTime - lastPhysicsTime;
             PhysicsUpdate(physicsDeltaTime);
         }
+
+        Profiler.AddFrameTimeValue((float)eventArgs.Time);
 
         Update(eventArgs.Time);
         LateUpdate(eventArgs.Time);

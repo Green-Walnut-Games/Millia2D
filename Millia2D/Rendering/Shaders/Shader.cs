@@ -1,5 +1,5 @@
-using System.Reflection;
 using OpenTK.Graphics.OpenGL4;
+using System.Reflection;
 
 namespace Millia2d.Rendering.Shaders;
 

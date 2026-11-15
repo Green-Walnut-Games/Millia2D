@@ -1,6 +1,6 @@
 using Millia2D;
 
-namespace Millia2d.Transformations;
+namespace Millia2d.Mathematics;
 
 public class Transform : Component
 {

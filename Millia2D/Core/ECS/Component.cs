@@ -1,5 +1,3 @@
-using System.Reflection.Metadata;
-
 namespace Millia2D;
 
 /// <summary>
