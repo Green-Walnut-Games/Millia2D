@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("tests")]
 
@@ -9,7 +8,6 @@ using Millia2d;
 using Millia2d.Core;
 using Millia2d.Profiling;
 using Millia2d.Rendering;
-using OpenTK.Platform.Windows;
 using OpenTK.Windowing.Common;
 using Windowing;
 

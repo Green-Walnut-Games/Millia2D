@@ -1,6 +1,6 @@
-namespace Millia2d.Transformations;
+namespace Millia2d.Mathematics;
 
-public class Vector3
+public struct Vector3
 {
     public float X { get; set; }
     public float Y { get; set; }
@@ -30,20 +30,6 @@ public class Vector3
     public static Vector3 Zero()
     {
         return new Vector3();
-    }
-
-    private static float Lerp(float first, float second, float time)
-    {
-        return first * (1 - time) + second * time;
-    }
-
-    public static Vector3 Lerp(Vector3 first, Vector3 second, float time)
-    {
-        float xLerp = Lerp(first.X, second.X, time);
-        float yLerp = Lerp(first.Y, second.Y, time);
-        float zLerp = Lerp(first.Z, second.Z, time);
-
-        return new(xLerp, yLerp, zLerp);
     }
 
     public static Vector3 operator +(Vector3 left, Vector3 right)

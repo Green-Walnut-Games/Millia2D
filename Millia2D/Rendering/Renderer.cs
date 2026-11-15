@@ -2,7 +2,7 @@ using Millia2D;
 using Millia2d.Rendering.Shaders;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
-using Vector3 = Millia2d.Transformations.Vector3;
+using Vector3 = Millia2d.Mathematics.Vector3;
 
 namespace Millia2d.Rendering;
 

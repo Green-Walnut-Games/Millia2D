@@ -1,5 +1,4 @@
-using System.ComponentModel;
-using Millia2d.Transformations;
+using Millia2d.Mathematics;
 
 namespace Millia2D;
 

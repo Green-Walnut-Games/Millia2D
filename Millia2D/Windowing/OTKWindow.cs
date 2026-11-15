@@ -124,13 +124,6 @@ internal class OTKWindow : GameWindow
 
         ImGui.StyleColorsDark();
 
-        // ImGuiStylePtr style = ImGui.GetStyle();
-        // if ((io.ConfigFlags & ImGuiConfigFlags.ViewportsEnable) != 0)
-        // {
-        //     style.WindowRounding = 0.0f;
-        //     style.Colors[(int)ImGuiCol.WindowBg].W = 1.0f;
-        // }
-
         ImguiImplOpenTK4.Init(this);
         ImguiImplOpenGL3.Init();
     }

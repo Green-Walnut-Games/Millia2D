@@ -1,10 +1,9 @@
-using Millia2D;
 using Millia2d;
-using Millia2d.Core;
+using Millia2D;
 using Millia2d.Logging;
+using Millia2d.Mathematics;
 using Millia2d.Rendering;
-using Millia2D.Resources;
-using Millia2d.Transformations;
+using Math = Millia2d.Mathematics.Math;
 
 public class Game : MilliaGame
 {
@@ -65,7 +64,7 @@ public class Circle : Component
             direction = new((float)rnd.NextDouble() * 2 - 1, (float)rnd.NextDouble() * 2 - 1);
         }
 
-        Actor.Transform.Position = Vector3.Lerp(
+        Actor.Transform.Position = Math.Lerp(
             Actor.Transform.Position,
             Actor.Transform.Position + direction * speed,
             5
