@@ -1,15 +1,19 @@
 using System.Numerics;
 using Millia2D;
+using Millia2d;
 using Millia2d.Core;
+using Millia2d.Logging;
 using Millia2d.Rendering;
 using Millia2D.Resources;
-using OpenTK.Graphics.OpenGL;
 
 public class Game : MilliaGame
 {
     public override void Init()
     {
+        Log.SetLogLevel(LogLevel.Debug);
         Scene world = new("World");
+
+        Log.Info("Hello hello from game");
 
         Actor player = new();
         player.AddComponent(new PlayerClass());
@@ -37,12 +41,14 @@ public class PlayerClass : Component
     public override void Preload()
     {
         base.Preload();
-        Console.WriteLine("Player preload");
+
+        Log.Debug("Player started");
     }
 
     public override void Update(double deltaTime)
     {
         base.Update(deltaTime);
+
         Actor.Transform.Rotation.Z +=
             10f
             * MathF.Tan((float)Clock.totalElapsedTime)
