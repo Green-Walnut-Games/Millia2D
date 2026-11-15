@@ -1,72 +1,74 @@
-using System.Numerics;
 using Millia2D;
 using Millia2d;
 using Millia2d.Core;
 using Millia2d.Logging;
 using Millia2d.Rendering;
 using Millia2D.Resources;
+using Millia2d.Transformations;
 
 public class Game : MilliaGame
 {
     public override void Init()
     {
-        Log.SetLogLevel(LogLevel.Debug);
+        Log.SetLogLevel(LogLevel.Info);
         Scene world = new("World");
 
-        Log.Info("Hello hello from game");
+        int numOfCircles = 50;
 
-        Actor player = new();
-        player.AddComponent(new PlayerClass());
+        for (int i = 0; i < numOfCircles; i++)
+        {
+            Actor circle = new();
 
-        Texture texture = new("assets/picture.png");
-        Sprite sprite = new();
-        sprite.Texture = texture;
-        player.AddComponent(sprite);
+            Texture circleTexture = new("assets/circle.png");
+            Sprite circleSprite = new();
+            circleSprite.Texture = circleTexture;
+            circle.AddComponent(circleSprite);
+            circle.AddComponent(new Circle());
+            circle.Transform.Scale = new Vector3(0.2f, 0.2f, 1);
 
-        Actor cats = new();
-        cats.AddComponent(new CatClass());
-        Texture catsTexture = new("assets/cats.png");
-        Sprite catsSprite = new();
-        catsSprite.Texture = catsTexture;
-        cats.AddComponent(catsSprite);
+            world.AddActor(circle);
+        }
 
-        world.AddActor(cats);
-        world.AddActor(player);
         AddScene(world);
     }
 }
 
-public class PlayerClass : Component
+public class Circle : Component
 {
+    Random rnd = new();
+
+    float initX,
+        initY;
+
+    float speed = 0.001f;
+
+    Vector3 direction;
+
     public override void Preload()
     {
         base.Preload();
+        initX = (float)rnd.NextDouble() * 20 - 10;
+        initY = (float)rnd.NextDouble() * 10 - 5;
 
-        Log.Debug("Player started");
+        direction = new(initX, initY, 0);
+
+        // Randomize position
+        Actor.Transform.Position = new Vector3(initX, initY, 0);
     }
 
     public override void Update(double deltaTime)
     {
         base.Update(deltaTime);
 
-        Actor.Transform.Rotation.Z +=
-            10f
-            * MathF.Tan((float)Clock.totalElapsedTime)
-            * MathF.Sin(2 * (float)Clock.totalElapsedTime)
-            * (float)deltaTime;
-    }
-}
+        if (rnd.NextDouble() > 0.8)
+        {
+            direction = new((float)rnd.NextDouble() * 2 - 1, (float)rnd.NextDouble() * 2 - 1);
+        }
 
-public class CatClass : Component
-{
-    public override void Update(double deltaTime)
-    {
-        base.Update(deltaTime);
-
-        Actor.Transform.Position.X = 2 * MathF.Cos((float)Clock.totalElapsedTime);
-        Actor.Transform.Position.Y = MathF.Sin((float)Clock.totalElapsedTime * 2);
-
-        Actor.Transform.Scale.X = MathF.Sin((float)Clock.totalElapsedTime);
-        Actor.Transform.Scale.Y = MathF.Cos((float)Clock.totalElapsedTime);
+        Actor.Transform.Position = Vector3.Lerp(
+            Actor.Transform.Position,
+            Actor.Transform.Position + direction * speed,
+            5
+        );
     }
 }

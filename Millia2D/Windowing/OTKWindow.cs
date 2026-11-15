@@ -20,6 +20,11 @@ internal class OTKWindow : GameWindow
         base.OnLoad();
 
         GL.ClearColor(0.2f, 0.2f, 0.5f, 1.0f);
+        GL.Enable(EnableCap.Blend);
+        GL.BlendFunc(
+            (BlendingFactor)BlendingFactorSrc.SrcAlpha,
+            (BlendingFactor)BlendingFactorDest.OneMinusSrcAlpha
+        );
 
         // Renderer onLoad here
         MilliaGame.GameInstance.Renderer.OnLoad();
@@ -38,6 +43,8 @@ internal class OTKWindow : GameWindow
         MilliaGame.GameInstance.Renderer.OnUnload();
     }
 
+    bool isDebugOpen = false;
+
     protected override void OnRenderFrame(FrameEventArgs args)
     {
         base.OnRenderFrame(args);
@@ -53,9 +60,17 @@ internal class OTKWindow : GameWindow
         // Setup ImGui
         ImGuiRenderSetup(args);
 
-        // Setup custom Millia2D debug window
-        DebugWindow dw = new();
-        dw.OnUpdateFrame(args);
+        if (KeyboardState.IsKeyPressed(OpenTK.Windowing.GraphicsLibraryFramework.Keys.F1))
+        {
+            isDebugOpen = !isDebugOpen;
+        }
+
+        if (isDebugOpen)
+        {
+            // Setup custom Millia2D debug window
+            DebugWindow dw = new();
+            dw.OnUpdateFrame(args);
+        }
 
         // Renderer onRenderFrame here
         MilliaGame.GameInstance.Renderer.OnRenderFrame();

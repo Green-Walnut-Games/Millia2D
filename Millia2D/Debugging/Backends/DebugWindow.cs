@@ -1,4 +1,5 @@
 using ImGuiNET;
+using Millia2D;
 using OpenTK.Windowing.Common;
 
 /// <summary>
@@ -10,6 +11,7 @@ public class DebugWindow
     {
         ImGui.Begin("Millia2D Debugger");
         Performance(e);
+        GameData();
         ImGui.End();
     }
 
@@ -17,5 +19,12 @@ public class DebugWindow
     {
         float fps = 1 / (float)e.Time;
         ImGui.Text($"FPS: {Math.Round(fps)}");
+    }
+
+    private void GameData()
+    {
+        MilliaGame game = MilliaGame.GameInstance;
+        ImGui.Text($"Loaded worlds: {game.LoadedScenes.Count}");
+        ImGui.Text($"Total actors: {game.LoadedScenes.Sum(world => world.Actors.Count)}");
     }
 }
