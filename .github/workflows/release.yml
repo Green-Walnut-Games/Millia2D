@@ -5,9 +5,10 @@ on:
 
 permissions:
   contents: write
+  id-token: write
   
 jobs:
-  versioning:
+  release:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
