@@ -10,9 +10,11 @@ XElement versionElement = doc.Root.Element("Version");
 string version = versionElement.Value;
 
 // version can be something like 0.1.0
-major = version.Split(".")[0];
-minor = version.Split(".")[1];
-patch = version.Split(".")[2];
+// if extra text is needed for version numbers,
+// it can easily be achieved using 1.0.2.3-dev5 - the fourth dot
+major = Int32.Parse(version.Split(".")[0]);
+minor = Int32.Parse(version.Split(".")[1]);
+patch = Int32.Parse(version.Split(".")[2]);
 
 List<string> prNameParts = prName.Split(":").ToList();
 string prefix = prNameParts[0];
@@ -39,4 +41,4 @@ else
 }
 
 versionElement.Value = $"{major}.{minor}.{patch}";
-doc.Save();
+doc.Save("./Millia2D/Millia2d.csproj");
