@@ -5,7 +5,7 @@
     <Description>A game engine focused on high-performance of large numbers of actors.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryURL>https://github.com/Green-Walnut-Games/Millia2D</RepositoryURL>
-    <Version>0.3.0</Version>
+    <Version>0.4.0</Version>
     <Authors>Costin Andrei Patea</Authors>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
