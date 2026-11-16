@@ -10,7 +10,7 @@ string csProjPath = "Millia2D/Millia2d.csproj";
 Console.WriteLine($"File exists: {File.Exists(csProjPath)}");
 
 XDocument doc = XDocument.Load(csProjPath);
-XElement versionElement = doc.Root.Element("Version");
+XElement versionElement = doc.Root.Element("Project").Element("PropertyGroup").Element("Version");
 string version = versionElement.Value;
 
 // version can be something like 0.1.0
