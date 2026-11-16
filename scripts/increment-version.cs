@@ -5,6 +5,8 @@ int major,
     minor,
     patch;
 
+Console.WriteLine(Directory.GetDirectories(".."));
+
 XDocument doc = XDocument.Load("../Millia2D/Millia2d.csproj");
 XElement versionElement = doc.Root.Element("Version");
 string version = versionElement.Value;
