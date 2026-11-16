@@ -41,14 +41,13 @@ else if (prName.Contains("!"))
 }
 else
 {
-    switch (prefix.ToLower())
+    if (prefix.ToLower().Contains("feat"))
     {
-        case "feat":
-            minor++;
-            break;
-        case "fix":
-            patch++;
-            break;
+        minor++;
+    }
+    else if (prefix.ToLower().Contains("fix"))
+    {
+        patch++;
     }
 }
 
