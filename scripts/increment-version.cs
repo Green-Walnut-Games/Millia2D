@@ -7,7 +7,7 @@ int major,
 
 if (prName.Contains("chore: Autopublish"))
 {
-    return;
+    Environment.Exit(10);
 }
 
 string csProjPath = "Millia2D/Millia2d.csproj";
@@ -28,22 +28,25 @@ string prefix = prNameParts[0];
 
 if (!prName.Contains(":"))
 {
-    return;
+    Environment.Exit(10);
 }
 
 if (prName.Contains("chore:"))
 {
-    return;
+    Environment.Exit(10);
 }
 else if (prName.Contains("!"))
 {
     major++;
+    minor = 0;
+    patch = 0;
 }
 else
 {
     if (prefix.ToLower().Contains("feat"))
     {
         minor++;
+        patch = 0;
     }
     else if (prefix.ToLower().Contains("fix"))
     {
@@ -51,5 +54,9 @@ else
     }
 }
 
-versionElement.Value = $"{major}.{minor}.{patch}";
+string finalVersion = $"{major}.{minor}.{patch}";
+versionElement.Value = finalVersion;
 doc.Save(csProjPath);
+
+StreamWriter writer = new("$GITHUB_ENV");
+writer.WriteLine($"FINAL_VERSION={finalVersion}");
