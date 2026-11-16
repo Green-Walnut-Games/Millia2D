@@ -26,6 +26,11 @@ patch = Int32.Parse(version.Split(".")[2]);
 List<string> prNameParts = prName.Split(":").ToList();
 string prefix = prNameParts[0];
 
+if (!prName.Contains(":"))
+{
+    return;
+}
+
 if (prName.Contains("chore:"))
 {
     return;
@@ -36,14 +41,13 @@ else if (prName.Contains("!"))
 }
 else
 {
-    switch (prefix.ToLower())
+    if (prefix.ToLower().Contains("feat"))
     {
-        case "feat":
-            minor++;
-            break;
-        case "fix":
-            patch++;
-            break;
+        minor++;
+    }
+    else if (prefix.ToLower().Contains("fix"))
+    {
+        patch++;
     }
 }
 
