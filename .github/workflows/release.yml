@@ -7,7 +7,7 @@ permissions:
   contents: write
   
 jobs:
-  testing:
+  versioning:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -25,3 +25,13 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         message: "chore: Autopublish ${{ github.event.head_commit.id }}"
+    - name: Pack
+      run: dotnet pack
+    - name: NuGet login (OIDC → temp API key)
+      uses: NuGet/login@v1
+      id: login
+      with:
+        user: ${{ secrets.NUGET_USER }}
+    # Push the package
+    - name: NuGet push
+      run: dotnet nuget 'push Millia2D/bin/release/net10.0/Millia2d.*.nupkg' --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
