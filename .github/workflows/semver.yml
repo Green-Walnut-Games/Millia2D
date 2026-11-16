@@ -20,3 +20,8 @@ jobs:
       run: dotnet run scripts/increment-version.cs
       env:
         PR_NAME: "${{ github.event.head_commit.message }}"
+    - name: Commit & Push changes
+      uses: actions-js/push@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        message: "chore: Autopublish"
