@@ -5,9 +5,11 @@ int major,
     minor,
     patch;
 
-Console.WriteLine($"File exists: {File.Exists("../Millia2D/Millia2d.csproj")}");
+string csProjPath = "Millia2D/Millia2d.csproj";
 
-XDocument doc = XDocument.Load("../Millia2D/Millia2d.csproj");
+Console.WriteLine($"File exists: {File.Exists(csProjPath)}");
+
+XDocument doc = XDocument.Load(csProjPath);
 XElement versionElement = doc.Root.Element("Version");
 string version = versionElement.Value;
 
