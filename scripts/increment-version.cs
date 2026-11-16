@@ -6,7 +6,7 @@ int major,
     patch;
 
 XDocument doc = XDocument.Load("./Millia2D/Millia2d.csproj");
-XElement versionElement = doc.Root.Element("Version");
+XElement versionElement = doc.Root.Element("Project").Element("PropertyGroup").Element("Version");
 string version = versionElement.Value;
 
 // version can be something like 0.1.0
