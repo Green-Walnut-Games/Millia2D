@@ -5,8 +5,8 @@ int major,
     minor,
     patch;
 
-XDocument doc = XDocument.Load("./Millia2D/Millia2d.csproj");
-XElement versionElement = doc.Root.Element("Project").Element("PropertyGroup").Element("Version");
+XDocument doc = XDocument.Load("../Millia2D/Millia2d.csproj");
+XElement versionElement = doc.Root.Element("Version");
 string version = versionElement.Value;
 
 // version can be something like 0.1.0
@@ -41,4 +41,4 @@ else
 }
 
 versionElement.Value = $"{major}.{minor}.{patch}";
-doc.Save("./Millia2D/Millia2d.csproj");
+doc.Save("../Millia2D/Millia2d.csproj");
