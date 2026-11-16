@@ -57,3 +57,9 @@ else
 string finalVersion = $"{major}.{minor}.{patch}";
 versionElement.Value = finalVersion;
 doc.Save(csProjPath);
+
+string githubEnvPath = Environment.GetEnvironmentVariable("GITHUB_ENV");
+if (!string.IsNullOrEmpty(githubEnvPath))
+{
+    File.AppendAllText(githubEnvPath, $"FINAL_VERSION={finalVersion}{Environment.NewLine}");
+}
