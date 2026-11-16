@@ -5,6 +5,8 @@ on:
 
 permissions:
   actions: read
+  pages: write
+  id-token: write
   
 jobs:
   testing:
@@ -16,8 +18,6 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.x
-    - name: Dir check
-      run: ls Millia2D
     - name: Semver Script
       run: dotnet run scripts/increment-version.cs
       env:

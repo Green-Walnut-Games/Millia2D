@@ -5,7 +5,7 @@ int major,
     minor,
     patch;
 
-Console.WriteLine(Directory.GetDirectories(".."));
+Console.WriteLine($"File exists: {File.Exists("../Millia2D/Millia2d.csproj")}");
 
 XDocument doc = XDocument.Load("../Millia2D/Millia2d.csproj");
 XElement versionElement = doc.Root.Element("Version");
