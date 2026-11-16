@@ -17,7 +17,7 @@ XElement versionElement = doc.Root.Element("PropertyGroup").Element("Version");
 string version = versionElement.Value;
 
 // version can be something like 0.1.0
-// if extra text is needed for version numbers,
+// if extra text is needed for version numbers
 // it can easily be achieved using 1.0.2.3-dev5 - the fourth dot
 major = Int32.Parse(version.Split(".")[0]);
 minor = Int32.Parse(version.Split(".")[1]);
