@@ -24,4 +24,4 @@ jobs:
       uses: actions-js/push@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        message: "chore: Autopublish ${{ env.FINAL_VERSION }}"
+        message: "chore: Autopublish ${{ github.event.head_commit.id }}"

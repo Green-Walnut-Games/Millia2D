@@ -57,6 +57,3 @@ else
 string finalVersion = $"{major}.{minor}.{patch}";
 versionElement.Value = finalVersion;
 doc.Save(csProjPath);
-
-StreamWriter writer = new("$GITHUB_ENV");
-writer.WriteLine($"FINAL_VERSION={finalVersion}");
