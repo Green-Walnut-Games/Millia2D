@@ -26,6 +26,11 @@ patch = Int32.Parse(version.Split(".")[2]);
 List<string> prNameParts = prName.Split(":").ToList();
 string prefix = prNameParts[0];
 
+if (!prName.Contains(":"))
+{
+    return;
+}
+
 if (prName.Contains("chore:"))
 {
     return;
