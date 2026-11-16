@@ -8,7 +8,7 @@ int major,
 string csProjPath = "Millia2D/Millia2d.csproj";
 
 XDocument doc = XDocument.Load(csProjPath);
-XElement versionElement = doc.Root.Element("Project").Element("PropertyGroup").Element("Version");
+XElement versionElement = doc.Root.Element("PropertyGroup").Element("Version");
 string version = versionElement.Value;
 
 // version can be something like 0.1.0
