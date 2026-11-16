@@ -45,4 +45,4 @@ else
 }
 
 versionElement.Value = $"{major}.{minor}.{patch}";
-doc.Save("../Millia2D/Millia2d.csproj");
+doc.Save(csProjPath);
