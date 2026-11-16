@@ -17,7 +17,7 @@ jobs:
       with:
         dotnet-version: 8.x
     - name: Dir check
-      run: ls
+      run: cd Millia2D | ls
     - name: Semver Script
       run: dotnet run scripts/increment-version.cs
       env:
