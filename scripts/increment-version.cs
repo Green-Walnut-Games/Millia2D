@@ -5,6 +5,11 @@ int major,
     minor,
     patch;
 
+if (prName.Contains("chore: Autopublish"))
+{
+    return;
+}
+
 string csProjPath = "Millia2D/Millia2d.csproj";
 
 XDocument doc = XDocument.Load(csProjPath);
