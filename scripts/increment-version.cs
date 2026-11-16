@@ -14,7 +14,7 @@ major = version.Split(".")[0];
 minor = version.Split(".")[1];
 patch = version.Split(".")[2];
 
-List<string> prNameParts = prName.Split(":");
+List<string> prNameParts = prName.Split(":").ToList();
 string prefix = prNameParts[0];
 
 if (prName.Contains("chore:"))
