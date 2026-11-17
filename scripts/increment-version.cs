@@ -7,7 +7,7 @@ int major,
 
 if (prName.Contains("chore: Autopublish"))
 {
-    Environment.Exit(0);
+    Environment.Exit(1);
 }
 
 string csProjPath = "Millia2D/Millia2d.csproj";
@@ -28,12 +28,12 @@ string prefix = prNameParts[0];
 
 if (!prName.Contains(":"))
 {
-    Environment.Exit(0);
+    Environment.Exit(1);
 }
 
 if (prName.Contains("chore:"))
 {
-    Environment.Exit(0);
+    Environment.Exit(1);
 }
 else if (prName.Contains("!"))
 {
