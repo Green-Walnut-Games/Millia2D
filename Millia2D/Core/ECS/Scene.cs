@@ -35,6 +35,13 @@ public class Scene
     public void AddActor(Actor actor)
     {
         Actors.Add(actor);
+
+        if (!actor.hasStarted)
+        {
+            actor.Components.ToList().ForEach(a => a.Preload());
+            actor.Components.ToList().ForEach(a => a.Load());
+            actor.hasStarted = true;
+        }
     }
 
     /// <summary>

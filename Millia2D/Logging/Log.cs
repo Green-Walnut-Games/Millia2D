@@ -1,6 +1,8 @@
 namespace Millia2d;
 
+using Millia2D;
 using Millia2d.Logging;
+using Millia2d.Windowing;
 using Serilog;
 using Serilog.Core;
 
@@ -34,6 +36,12 @@ public static class Log
     public static void Info(string message)
     {
         Serilog.Log.Information(message);
+    }
+
+    public static void TimeData(string message, double value)
+    {
+        Serilog.Log.Debug($"{message}: {value}");
+        OTKWindow.DebugWindow.AddLiveMeasurement(message, value);
     }
 
     public static void Debug(string message)

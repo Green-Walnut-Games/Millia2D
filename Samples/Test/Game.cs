@@ -7,28 +7,39 @@ using Math = Millia2d.Mathematics.Math;
 
 public class Game : MilliaGame
 {
+    public static Scene world;
+
     public override void Init()
     {
         Log.SetLogLevel(LogLevel.Info);
-        Scene world = new("World");
+        world = new("World");
 
-        int numOfCircles = 50;
+        Actor spawnerActor = new();
+        Spawner spawner = new();
+        spawnerActor.AddComponent(spawner);
 
-        for (int i = 0; i < numOfCircles; i++)
-        {
-            Actor circle = new();
-
-            Texture circleTexture = new("assets/circle.png");
-            Sprite circleSprite = new();
-            circleSprite.Texture = circleTexture;
-            circle.AddComponent(circleSprite);
-            circle.AddComponent(new Circle());
-            circle.Transform.Scale = new Vector3(0.2f, 0.2f, 1);
-
-            world.AddActor(circle);
-        }
+        world.AddActor(spawnerActor);
 
         AddScene(world);
+    }
+}
+
+public class Spawner : Component
+{
+    public override void PhysicsUpdate(double deltaTime)
+    {
+        base.PhysicsUpdate(deltaTime);
+
+        Actor circle = new();
+
+        Texture circleTexture = new("assets/circle.png");
+        Sprite circleSprite = new();
+        circleSprite.Texture = circleTexture;
+        circle.AddComponent(circleSprite);
+        circle.AddComponent(new Circle());
+        circle.Transform.Scale = new Vector3(0.2f, 0.2f, 1);
+
+        Game.world.AddActor(circle);
     }
 }
 

@@ -10,7 +10,6 @@ public class Sprite : Component
     {
         base.Preload();
 
-        Console.WriteLine("Sprite preload");
         MilliaGame.GameInstance.Renderer.RegisterSprite(this);
     }
 }

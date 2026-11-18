@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 using System.Text;
 
 namespace Millia2d.Profiling;
@@ -62,9 +63,23 @@ internal static class Profiler
             fivePercentHighFrameTimes.Add(frameTimes[i]);
         }
 
-        float fivePercentLowFrameTime = fivePercentLowFrameTimes.Average();
-        float fivePercentHighFrameTime = fivePercentHighFrameTimes.Average();
+        float fivePercentLowFrameTime =
+            fivePercentLowFrameTimes.Count > 0 ? fivePercentLowFrameTimes.Average() : 0;
+        float fivePercentHighFrameTime =
+            fivePercentHighFrameTimes.Count > 0 ? fivePercentHighFrameTimes.Average() : 0;
 
         return (fivePercentLowFrameTime, fivePercentHighFrameTime);
+    }
+
+    public static double MeasureTime(string measurementName, Action action)
+    {
+        Stopwatch watch = new();
+        watch.Start();
+        action.Invoke();
+        watch.Stop();
+
+        Log.Debug($"{measurementName}, {watch.ElapsedMilliseconds} ms");
+
+        return watch.ElapsedMilliseconds;
     }
 }

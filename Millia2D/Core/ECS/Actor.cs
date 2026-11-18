@@ -24,6 +24,8 @@ public class Actor
 
     public Transform Transform { get; } = new();
 
+    public bool hasStarted = false;
+
     public Actor(string actorName = "New Actor")
     {
         GUID = Guid.NewGuid();
@@ -38,6 +40,13 @@ public class Actor
     {
         Components.Add(component);
         component.Actor = this;
+
+        if (hasStarted && !component.hasStarted)
+        {
+            component.Preload();
+            component.Load();
+            component.hasStarted = true;
+        }
     }
 
     /// <summary>
