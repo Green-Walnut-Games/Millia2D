@@ -1,13 +1,13 @@
-﻿using ImGuiNET;
-using OpenTK.Graphics.OpenGL4;
-using OpenTK.Mathematics;
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using ImGuiNET;
+using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
 
 namespace Dear_ImGui_Sample.Backends;
 
-public static unsafe class ImguiImplOpenGL3
+internal static unsafe class ImguiImplOpenGL3
 {
     // See: https://github.com/ImGuiNET/ImGui.NET/issues/527
     internal struct ImDrawCmd_fixed

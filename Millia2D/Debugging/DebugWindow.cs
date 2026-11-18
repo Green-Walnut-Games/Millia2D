@@ -10,34 +10,6 @@ using OpenTK.Windowing.Common;
 /// </summary>
 internal class DebugWindow
 {
-    internal static Dictionary<string, TimeSeriesData> liveMeasurements { get; private set; } =
-        new();
-
-    internal void AddLiveMeasurement(string message, double value)
-    {
-        if (liveMeasurements.ContainsKey(message))
-        {
-            TimeSeriesData data = liveMeasurements[message];
-            data.values[data.offset] = (float)value;
-            data.offset = data.offset + 1;
-
-            if (data.offset >= data.values.Length)
-            {
-                data.offset = 0;
-            }
-
-            liveMeasurements[message] = data;
-        }
-        else
-        {
-            TimeSeriesData data = new();
-            data.values[0] = (float)value;
-            data.offset = 0;
-
-            liveMeasurements.Add(message, data);
-        }
-    }
-
     // TODO: Figure out how to programmatically set docking
     internal void OnUpdateFrame(FrameEventArgs e)
     {
@@ -45,6 +17,8 @@ internal class DebugWindow
 
         // Keep performance last so we always see FPS data when we start debug menu
         Performance(e);
+
+        LiveMeasurements();
     }
 
     private void Performance(FrameEventArgs e)
@@ -56,8 +30,15 @@ internal class DebugWindow
 
         ImGui.Text("");
 
+        ImGui.End();
+    }
+
+    private void LiveMeasurements()
+    {
+        ImGui.Begin("Live measurements");
+
         ImGui.Text("Live measurements:");
-        foreach (var pair in liveMeasurements)
+        foreach (var pair in Profiler.LiveMeasurements)
         {
             Log.Info($"ImGui text should be updated with {pair.Value.LastValue}");
             ImGui.Text($"{pair.Key}: {pair.Value.LastValue}");
