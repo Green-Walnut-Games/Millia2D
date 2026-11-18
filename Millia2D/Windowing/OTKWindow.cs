@@ -28,7 +28,7 @@ internal class OTKWindow : GameWindow
         );
 
         // Renderer onLoad here
-        MilliaGame.GameInstance.Renderer.OnLoad();
+        MilliaGame.Instance.Renderer.OnLoad();
 
         SetupImGui();
     }
@@ -41,7 +41,7 @@ internal class OTKWindow : GameWindow
         ImguiImplOpenTK4.Shutdown();
 
         // Renderer unload here
-        MilliaGame.GameInstance.Renderer.OnUnload();
+        MilliaGame.Instance.Renderer.OnUnload();
     }
 
     internal static DebugWindow DebugWindow { get; private set; } = new();
@@ -69,13 +69,13 @@ internal class OTKWindow : GameWindow
 
         double renderFrameTime = Profiler.MeasureTime(
             "Game instance render frame",
-            MilliaGame.GameInstance.Renderer.OnRenderFrame
+            MilliaGame.Instance.Renderer.OnRenderFrame
         );
 
         Log.LiveMeasurementEngine("Render frame time", renderFrameTime);
         Log.LiveMeasurementEngine(
             "Actors",
-            MilliaGame.GameInstance.LoadedScenes.Sum(x => x.Actors.Count)
+            MilliaGame.Instance.LoadedScenes.Sum(x => x.Actors.Count)
         );
 
         if (isDebugOpen)

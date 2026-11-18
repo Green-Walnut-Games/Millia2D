@@ -13,7 +13,7 @@ using Windowing;
 
 public class MilliaGame
 {
-    public static MilliaGame? GameInstance { get; private set; }
+    public static MilliaGame? Instance { get; private set; }
 
     public Window Window { get; private set; }
 
@@ -23,7 +23,7 @@ public class MilliaGame
 
     internal MilliaGame()
     {
-        GameInstance = this;
+        Instance = this;
         Log.Init();
 
         Init();
@@ -33,7 +33,7 @@ public class MilliaGame
 
     public MilliaGame(int width = 800, int height = 600, string title = "Millia2D Game")
     {
-        GameInstance = this;
+        Instance = this;
         Renderer = new();
         Window = new Window(width, height, title);
         Log.Init();

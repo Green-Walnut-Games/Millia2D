@@ -77,7 +77,7 @@ internal class DebugWindow
     {
         ImGui.Begin("Debugger");
 
-        MilliaGame game = MilliaGame.GameInstance;
+        MilliaGame game = MilliaGame.Instance;
         ImGui.Text($"Loaded worlds: {game.LoadedScenes.Count}");
         ImGui.Text($"Total actors: {game.LoadedScenes.Sum(world => world.Actors.Count)}");
 

@@ -149,8 +149,8 @@ public class Renderer
     {
         float gameHeight = 10;
 
-        float windowHeight = MilliaGame.GameInstance.Window.Height;
-        float windowWidth = MilliaGame.GameInstance.Window.Width;
+        float windowHeight = MilliaGame.Instance.Window.Height;
+        float windowWidth = MilliaGame.Instance.Window.Width;
 
         float aspect = windowWidth / windowHeight;
         float gameWidth = aspect * gameHeight;
