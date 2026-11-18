@@ -1,6 +1,7 @@
-namespace Millia2d;
+namespace Millia2D;
 
-using Millia2d.Logging;
+using Millia2D.Logging;
+using Millia2D.Profiling;
 using Serilog;
 using Serilog.Core;
 
@@ -34,6 +35,23 @@ public static class Log
     public static void Info(string message)
     {
         Serilog.Log.Information(message);
+    }
+
+    /// <summary>
+    /// Used to display data as time graphs in the debugging window.
+    /// It is advised to disable any calls to this function in a release build.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="value"></param>
+    public static void LiveMeasurement(string message, double value)
+    {
+        Serilog.Log.Debug($"{message}: {value}");
+        Profiler.AddLiveMeasurement(message, value);
+    }
+
+    internal static void LiveMeasurementEngine(string message, double value)
+    {
+        Profiler.AddLiveMeasurement(message, value, Profiler.EngineLiveMeasurements);
     }
 
     public static void Debug(string message)

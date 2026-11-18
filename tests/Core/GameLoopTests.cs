@@ -1,5 +1,5 @@
 using Millia2D;
-using Millia2d.Core;
+using Millia2D.Core;
 using OpenTK.Windowing.Common;
 
 namespace tests.Core;

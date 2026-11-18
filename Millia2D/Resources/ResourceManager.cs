@@ -1,5 +1,5 @@
-using Millia2d.Resources;
-using Millia2d.Resources.Loaders;
+using Millia2D.Resources;
+using Millia2D.Resources.Loaders;
 
 namespace Millia2D.Resources;
 

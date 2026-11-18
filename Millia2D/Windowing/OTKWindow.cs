@@ -1,11 +1,12 @@
 using Dear_ImGui_Sample.Backends;
 using ImGuiNET;
 using Millia2D;
+using Millia2D.Profiling;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 
-namespace Millia2d.Windowing;
+namespace Millia2D.Windowing;
 
 internal class OTKWindow : GameWindow
 {
@@ -43,6 +44,7 @@ internal class OTKWindow : GameWindow
         MilliaGame.GameInstance.Renderer.OnUnload();
     }
 
+    internal static DebugWindow DebugWindow { get; private set; } = new();
     bool isDebugOpen = false;
 
     protected override void OnRenderFrame(FrameEventArgs args)
@@ -65,15 +67,21 @@ internal class OTKWindow : GameWindow
             isDebugOpen = !isDebugOpen;
         }
 
+        double renderFrameTime = Profiler.MeasureTime(
+            "Game instance render frame",
+            MilliaGame.GameInstance.Renderer.OnRenderFrame
+        );
+
+        Log.LiveMeasurementEngine("Render frame time", renderFrameTime);
+        Log.LiveMeasurementEngine(
+            "Actors",
+            MilliaGame.GameInstance.LoadedScenes.Sum(x => x.Actors.Count)
+        );
+
         if (isDebugOpen)
         {
-            // Setup custom Millia2D debug window
-            DebugWindow dw = new();
-            dw.OnUpdateFrame(args);
+            DebugWindow.OnUpdateFrame(args);
         }
-
-        // Renderer onRenderFrame here
-        MilliaGame.GameInstance.Renderer.OnRenderFrame();
 
         ImGuiPostRenderFrame();
 

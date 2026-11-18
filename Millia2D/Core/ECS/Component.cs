@@ -12,6 +12,8 @@ public class Component
 
     public Actor? Actor { get; internal set; }
 
+    internal bool hasStarted = false;
+
     public Component()
     {
         GUID = Guid.NewGuid();

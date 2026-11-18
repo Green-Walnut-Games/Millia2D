@@ -1,4 +1,4 @@
-namespace Millia2d.Core;
+namespace Millia2D.Core;
 
 public static class Clock
 {

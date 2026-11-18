@@ -1,6 +1,6 @@
 using Millia2D;
 
-namespace Millia2d.Rendering;
+namespace Millia2D.Rendering;
 
 public class Sprite : Component
 {
@@ -10,7 +10,6 @@ public class Sprite : Component
     {
         base.Preload();
 
-        Console.WriteLine("Sprite preload");
         MilliaGame.GameInstance.Renderer.RegisterSprite(this);
     }
 }

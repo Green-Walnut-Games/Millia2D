@@ -1,4 +1,4 @@
-namespace Millia2d.Resources;
+namespace Millia2D.Resources;
 
 public interface IResourceLoader
 {

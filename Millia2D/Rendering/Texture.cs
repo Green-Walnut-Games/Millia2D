@@ -1,7 +1,7 @@
 using OpenTK.Graphics.OpenGL4;
 using StbImageSharp;
 
-namespace Millia2d.Rendering;
+namespace Millia2D.Rendering;
 
 public class Texture
 {

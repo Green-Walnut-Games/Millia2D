@@ -4,10 +4,10 @@
 
 namespace Millia2D;
 
-using Millia2d;
-using Millia2d.Core;
-using Millia2d.Profiling;
-using Millia2d.Rendering;
+using Millia2D;
+using Millia2D.Core;
+using Millia2D.Profiling;
+using Millia2D.Rendering;
 using OpenTK.Windowing.Common;
 using Windowing;
 

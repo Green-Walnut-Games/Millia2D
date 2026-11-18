@@ -1,9 +1,14 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
+using System.Formats.Tar;
 using System.Text;
 
-namespace Millia2d.Profiling;
+namespace Millia2D.Profiling;
 
-internal static class Profiler
+/// <summary>
+/// Class useful for performing profiling of your games.
+/// </summary>
+public static class Profiler
 {
     internal static List<float> frameTimes = new();
 
@@ -62,9 +67,73 @@ internal static class Profiler
             fivePercentHighFrameTimes.Add(frameTimes[i]);
         }
 
-        float fivePercentLowFrameTime = fivePercentLowFrameTimes.Average();
-        float fivePercentHighFrameTime = fivePercentHighFrameTimes.Average();
+        float fivePercentLowFrameTime =
+            fivePercentLowFrameTimes.Count > 0 ? fivePercentLowFrameTimes.Average() : 0;
+        float fivePercentHighFrameTime =
+            fivePercentHighFrameTimes.Count > 0 ? fivePercentHighFrameTimes.Average() : 0;
 
         return (fivePercentLowFrameTime, fivePercentHighFrameTime);
+    }
+
+    /// <summary>
+    /// Performs the given action, logs the time taken to do so and returns
+    /// the time taken.
+    /// </summary>
+    /// <param name="measurementName"></param>
+    /// <param name="action"></param>
+    /// <returns>Time taken to perform said action, in ms.</returns>
+    public static double MeasureTime(string measurementName, Action action)
+    {
+        Stopwatch watch = new();
+        watch.Start();
+        action.Invoke();
+        watch.Stop();
+
+        Log.Debug($"{measurementName}, {watch.ElapsedMilliseconds} ms");
+
+        return watch.ElapsedMilliseconds;
+    }
+
+    internal static Dictionary<string, TimeSeriesData> LiveMeasurements { get; private set; } =
+        new();
+
+    internal static Dictionary<string, TimeSeriesData> EngineLiveMeasurements
+    {
+        get;
+        private set;
+    } = new();
+
+    internal static void AddLiveMeasurement(
+        string message,
+        double value,
+        Dictionary<string, TimeSeriesData>? target = null
+    )
+    {
+        if (target == null)
+        {
+            target = LiveMeasurements;
+        }
+
+        if (target.ContainsKey(message))
+        {
+            TimeSeriesData data = target[message];
+            data.values[data.offset] = (float)value;
+            data.offset = data.offset + 1;
+
+            if (data.offset >= data.values.Length)
+            {
+                data.offset = 0;
+            }
+
+            target[message] = data;
+        }
+        else
+        {
+            TimeSeriesData data = new();
+            data.values[0] = (float)value;
+            data.offset = 0;
+
+            target.Add(message, data);
+        }
     }
 }

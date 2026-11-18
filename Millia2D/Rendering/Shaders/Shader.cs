@@ -1,7 +1,7 @@
-using OpenTK.Graphics.OpenGL4;
 using System.Reflection;
+using OpenTK.Graphics.OpenGL4;
 
-namespace Millia2d.Rendering.Shaders;
+namespace Millia2D.Rendering.Shaders;
 
 public class Shader : IDisposable
 {
