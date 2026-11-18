@@ -10,15 +10,16 @@ using OpenTK.Windowing.Common;
 /// </summary>
 internal class DebugWindow
 {
-    public static Dictionary<string, TimeSeriesData> liveMeasurements { get; private set; } = new();
+    internal static Dictionary<string, TimeSeriesData> liveMeasurements { get; private set; } =
+        new();
 
-    public void AddLiveMeasurement(string message, double value)
+    internal void AddLiveMeasurement(string message, double value)
     {
         if (liveMeasurements.ContainsKey(message))
         {
             TimeSeriesData data = liveMeasurements[message];
             data.values[data.offset] = (float)value;
-            data.offset = (data.offset + 1);
+            data.offset = data.offset + 1;
 
             if (data.offset >= data.values.Length)
             {
@@ -26,13 +27,9 @@ internal class DebugWindow
             }
 
             liveMeasurements[message] = data;
-
-            Log.Warning($"{message} already exists, added with offset {data.offset}");
         }
         else
         {
-            Log.Warning($"{message} needs to be added");
-
             TimeSeriesData data = new();
             data.values[0] = (float)value;
             data.offset = 0;
@@ -59,13 +56,11 @@ internal class DebugWindow
 
         ImGui.Text("");
 
-        //.OrderByDescending(x =>
-        //     x.Value.values[x.Value.values.Length - 1]
-        // )
-        ImGui.Text("Live measurements");
+        ImGui.Text("Live measurements:");
         foreach (var pair in liveMeasurements)
         {
-            ImGui.Text($"{pair.Key}: {pair.Value.values[pair.Value.values.Length - 1]}");
+            Log.Info($"ImGui text should be updated with {pair.Value.LastValue}");
+            ImGui.Text($"{pair.Key}: {pair.Value.LastValue}");
             PlotGraphForTimeSeries(pair.Key, pair.Value);
         }
 
@@ -98,14 +93,18 @@ internal class DebugWindow
     }
 }
 
-internal struct TimeSeriesData
+public struct TimeSeriesData
 {
-    internal float[] values;
-    internal int offset;
+    public float[] values { get; internal set; }
+    public int offset { get; internal set; }
+    public float LastValue
+    {
+        get => values[values.Length - 1];
+    }
 
     public TimeSeriesData()
     {
-        values = new float[1000];
+        values = new float[200];
         offset = 0;
     }
 }

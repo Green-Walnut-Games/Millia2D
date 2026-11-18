@@ -51,7 +51,6 @@ public class Renderer
 
     internal void RegisterSprite(Sprite sprite)
     {
-        Log.Info("Logged sprite");
         Sprites.Add(sprite);
     }
 

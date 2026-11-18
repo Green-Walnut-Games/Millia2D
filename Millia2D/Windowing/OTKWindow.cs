@@ -44,7 +44,7 @@ internal class OTKWindow : GameWindow
         MilliaGame.GameInstance.Renderer.OnUnload();
     }
 
-    internal static DebugWindow DebugWindow { get; private set; }
+    internal static DebugWindow DebugWindow { get; private set; } = new();
     bool isDebugOpen = false;
 
     protected override void OnRenderFrame(FrameEventArgs args)
@@ -61,9 +61,6 @@ internal class OTKWindow : GameWindow
 
         // Setup ImGui
         ImGuiRenderSetup(args);
-
-        // Setup custom Millia2D debug window
-        DebugWindow = new();
 
         if (KeyboardState.IsKeyPressed(OpenTK.Windowing.GraphicsLibraryFramework.Keys.F1))
         {
