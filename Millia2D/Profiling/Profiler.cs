@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
+using System.Formats.Tar;
 using System.Text;
 
 namespace Millia2d.Profiling;
@@ -96,11 +97,26 @@ public static class Profiler
     internal static Dictionary<string, TimeSeriesData> LiveMeasurements { get; private set; } =
         new();
 
-    internal static void AddLiveMeasurement(string message, double value)
+    internal static Dictionary<string, TimeSeriesData> EngineLiveMeasurements
     {
-        if (LiveMeasurements.ContainsKey(message))
+        get;
+        private set;
+    } = new();
+
+    internal static void AddLiveMeasurement(
+        string message,
+        double value,
+        Dictionary<string, TimeSeriesData>? target = null
+    )
+    {
+        if (target == null)
         {
-            TimeSeriesData data = LiveMeasurements[message];
+            target = LiveMeasurements;
+        }
+
+        if (target.ContainsKey(message))
+        {
+            TimeSeriesData data = target[message];
             data.values[data.offset] = (float)value;
             data.offset = data.offset + 1;
 
@@ -109,7 +125,7 @@ public static class Profiler
                 data.offset = 0;
             }
 
-            LiveMeasurements[message] = data;
+            target[message] = data;
         }
         else
         {
@@ -117,7 +133,7 @@ public static class Profiler
             data.values[0] = (float)value;
             data.offset = 0;
 
-            LiveMeasurements.Add(message, data);
+            target.Add(message, data);
         }
     }
 }

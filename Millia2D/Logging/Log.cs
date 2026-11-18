@@ -51,6 +51,11 @@ public static class Log
         Profiler.AddLiveMeasurement(message, value);
     }
 
+    internal static void LiveMeasurementEngine(string message, double value)
+    {
+        Profiler.AddLiveMeasurement(message, value, Profiler.EngineLiveMeasurements);
+    }
+
     public static void Debug(string message)
     {
         Serilog.Log.Debug(message);

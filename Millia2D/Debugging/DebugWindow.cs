@@ -13,15 +13,15 @@ internal class DebugWindow
     // TODO: Figure out how to programmatically set docking
     internal void OnUpdateFrame(FrameEventArgs e)
     {
-        GameData();
+        DebuggerTab();
 
         // Keep performance last so we always see FPS data when we start debug menu
-        Performance(e);
+        PerformanceTab(e);
 
-        LiveMeasurements();
+        LiveMeasurementsTab(Profiler.LiveMeasurements);
     }
 
-    private void Performance(FrameEventArgs e)
+    private void PerformanceTab(FrameEventArgs e)
     {
         ImGui.Begin("Performance");
 
@@ -30,20 +30,26 @@ internal class DebugWindow
 
         ImGui.Text("");
 
+        ShowLiveMeasurementsGraphs(Profiler.EngineLiveMeasurements);
+
         ImGui.End();
     }
 
-    private void LiveMeasurements()
+    private void LiveMeasurementsTab(Dictionary<string, TimeSeriesData> data)
     {
         ImGui.Begin("Live measurements");
+        ShowLiveMeasurementsGraphs(data);
 
-        if (Profiler.LiveMeasurements.Count > 0)
+        ImGui.End();
+    }
+
+    private void ShowLiveMeasurementsGraphs(Dictionary<string, TimeSeriesData> data)
+    {
+        if (data.Count > 0)
         {
             ImGui.Text("Live measurements:");
-            foreach (var pair in Profiler.LiveMeasurements)
+            foreach (var pair in data)
             {
-                Log.Info($"ImGui text should be updated with {pair.Value.LastValue}");
-                ImGui.Text($"{pair.Key}: {pair.Value.LastValue}");
                 PlotGraphForTimeSeries(pair.Key, pair.Value);
             }
         }
@@ -51,8 +57,6 @@ internal class DebugWindow
         {
             ImGui.Text("You have no live measurements set up.");
         }
-
-        ImGui.End();
     }
 
     private void PlotGraphForTimeSeries(string message, TimeSeriesData data)
@@ -69,7 +73,7 @@ internal class DebugWindow
         );
     }
 
-    private void GameData()
+    private void DebuggerTab()
     {
         ImGui.Begin("Debugger");
 
@@ -92,7 +96,7 @@ public struct TimeSeriesData
 
     public TimeSeriesData()
     {
-        values = new float[200];
+        values = new float[1000];
         offset = 0;
     }
 }

@@ -21,6 +21,16 @@ public class TestGame : MilliaGame
 
         world.AddActor(spawnerActor);
 
+        AddScene(world);
+    }
+}
+
+public class Spawner : Component
+{
+    public override void PhysicsUpdate(double deltaTime)
+    {
+        base.PhysicsUpdate(deltaTime);
+
         Actor circle = new();
 
         Texture circleTexture = new("assets/circle.png");
@@ -32,17 +42,7 @@ public class TestGame : MilliaGame
 
         TestGame.world.AddActor(circle);
 
-        AddScene(world);
-    }
-}
-
-public class Spawner : Component
-{
-    public override void PhysicsUpdate(double deltaTime)
-    {
-        base.PhysicsUpdate(deltaTime);
-
-        Log.LiveMeasurement("Delta time physics", MathF.Sin((float)Clock.totalElapsedTime));
+        Log.LiveMeasurement("Delta time physics", MathF.Tan((float)Clock.totalElapsedTime));
     }
 }
 
