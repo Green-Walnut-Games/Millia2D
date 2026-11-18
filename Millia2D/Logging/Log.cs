@@ -39,7 +39,13 @@ public static class Log
         Serilog.Log.Information(message);
     }
 
-    public static void TimeData(string message, double value)
+    /// <summary>
+    /// Used to display data as time graphs in the debugging window.
+    /// It is advised to disable any calls to this function in a release build.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="value"></param>
+    public static void LiveMeasurement(string message, double value)
     {
         Serilog.Log.Debug($"{message}: {value}");
         Profiler.AddLiveMeasurement(message, value);

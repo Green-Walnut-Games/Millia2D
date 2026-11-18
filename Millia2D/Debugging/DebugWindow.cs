@@ -37,12 +37,19 @@ internal class DebugWindow
     {
         ImGui.Begin("Live measurements");
 
-        ImGui.Text("Live measurements:");
-        foreach (var pair in Profiler.LiveMeasurements)
+        if (Profiler.LiveMeasurements.Count > 0)
         {
-            Log.Info($"ImGui text should be updated with {pair.Value.LastValue}");
-            ImGui.Text($"{pair.Key}: {pair.Value.LastValue}");
-            PlotGraphForTimeSeries(pair.Key, pair.Value);
+            ImGui.Text("Live measurements:");
+            foreach (var pair in Profiler.LiveMeasurements)
+            {
+                Log.Info($"ImGui text should be updated with {pair.Value.LastValue}");
+                ImGui.Text($"{pair.Key}: {pair.Value.LastValue}");
+                PlotGraphForTimeSeries(pair.Key, pair.Value);
+            }
+        }
+        else
+        {
+            ImGui.Text("You have no live measurements set up.");
         }
 
         ImGui.End();

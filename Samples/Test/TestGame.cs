@@ -42,7 +42,7 @@ public class Spawner : Component
     {
         base.PhysicsUpdate(deltaTime);
 
-        Log.TimeData("Delta time physics", MathF.Sin((float)Clock.totalElapsedTime));
+        Log.LiveMeasurement("Delta time physics", MathF.Sin((float)Clock.totalElapsedTime));
     }
 }
 

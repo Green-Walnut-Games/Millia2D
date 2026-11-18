@@ -72,8 +72,11 @@ internal class OTKWindow : GameWindow
             MilliaGame.GameInstance.Renderer.OnRenderFrame
         );
 
-        Log.TimeData("Render frame time", renderFrameTime);
-        Log.TimeData("Actors", MilliaGame.GameInstance.LoadedScenes.Sum(x => x.Actors.Count));
+        Log.LiveMeasurement("Render frame time", renderFrameTime);
+        Log.LiveMeasurement(
+            "Actors",
+            MilliaGame.GameInstance.LoadedScenes.Sum(x => x.Actors.Count)
+        );
 
         if (isDebugOpen)
         {
