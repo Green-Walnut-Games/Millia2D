@@ -36,6 +36,8 @@ public class Scene
     {
         Actors.Add(actor);
 
+        Log.Info($"World has started: {hasStarted} Actor has started: {actor.hasStarted}");
+
         if (hasStarted && !actor.hasStarted)
         {
             actor.Components.ToList().ForEach(a => a.Preload());
