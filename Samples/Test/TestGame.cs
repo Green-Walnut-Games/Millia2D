@@ -1,6 +1,4 @@
 using Millia2D;
-using Millia2D;
-using Millia2D.Core;
 using Millia2D.Logging;
 using Millia2D.Mathematics;
 using Millia2D.Rendering;
@@ -18,7 +16,6 @@ public class TestGame : MilliaGame
         Actor spawnerActor = new();
         Spawner spawner = new();
         spawnerActor.AddComponent(spawner);
-
         world.AddActor(spawnerActor);
 
         AddScene(world);
@@ -27,22 +24,29 @@ public class TestGame : MilliaGame
 
 public class Spawner : Component
 {
+    Texture? texture;
+
+    public override void Preload()
+    {
+        base.Preload();
+        texture = new("assets/circle.png");
+    }
+
     public override void PhysicsUpdate(double deltaTime)
     {
         base.PhysicsUpdate(deltaTime);
 
+        Log.Info("Physics update in spawner");
+
         Actor circle = new();
 
-        Texture circleTexture = new("assets/circle.png");
         Sprite circleSprite = new();
-        circleSprite.Texture = circleTexture;
+        circleSprite.Texture = texture;
         circle.AddComponent(circleSprite);
         circle.AddComponent(new Circle());
         circle.Transform.Scale = new Vector3(0.2f, 0.2f, 1);
 
         TestGame.world.AddActor(circle);
-
-        Log.LiveMeasurement("Delta time physics", MathF.Tan((float)Clock.totalElapsedTime));
     }
 }
 

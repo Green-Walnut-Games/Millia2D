@@ -70,6 +70,7 @@ public class MilliaGame
         {
             scene.Preload();
             scene.Load();
+            scene.hasStarted = true;
         }
         LoadedScenes.Add(scene);
     }
