@@ -1,10 +1,10 @@
-using Millia2d;
 using Millia2D;
-using Millia2d.Core;
-using Millia2d.Logging;
-using Millia2d.Mathematics;
-using Millia2d.Rendering;
-using Math = Millia2d.Mathematics.Math;
+using Millia2D;
+using Millia2D.Core;
+using Millia2D.Logging;
+using Millia2D.Mathematics;
+using Millia2D.Rendering;
+using Math = Millia2D.Mathematics.Math;
 
 public class TestGame : MilliaGame
 {

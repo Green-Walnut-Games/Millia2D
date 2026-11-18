@@ -1,8 +1,8 @@
 using System.Runtime.InteropServices;
 using ImGuiNET;
 using Millia2D;
-using Millia2d;
-using Millia2d.Profiling;
+using Millia2D;
+using Millia2D.Profiling;
 using OpenTK.Windowing.Common;
 
 /// <summary>

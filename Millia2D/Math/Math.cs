@@ -1,4 +1,4 @@
-namespace Millia2d.Mathematics;
+namespace Millia2D.Mathematics;
 
 public static class Math
 {

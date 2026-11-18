@@ -1,12 +1,12 @@
 using Dear_ImGui_Sample.Backends;
 using ImGuiNET;
 using Millia2D;
-using Millia2d.Profiling;
+using Millia2D.Profiling;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 
-namespace Millia2d.Windowing;
+namespace Millia2D.Windowing;
 
 internal class OTKWindow : GameWindow
 {

@@ -1,4 +1,4 @@
-using Millia2d.Mathematics;
+using Millia2D.Mathematics;
 
 namespace Millia2D;
 
@@ -24,7 +24,7 @@ public class Actor
 
     public Transform Transform { get; } = new();
 
-    public bool hasStarted = false;
+    internal bool hasStarted = false;
 
     public Actor(string actorName = "New Actor")
     {

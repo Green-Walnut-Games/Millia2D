@@ -1,4 +1,4 @@
-namespace Millia2d.Logging;
+namespace Millia2D.Logging;
 
 /// <summary>
 /// Minimum level at which the logging should work.

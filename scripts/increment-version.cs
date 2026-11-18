@@ -10,7 +10,7 @@ if (prName.Contains("chore: Autopublish"))
     Environment.Exit(1);
 }
 
-string csProjPath = "Millia2D/Millia2d.csproj";
+string csProjPath = "Millia2D/Millia2D.csproj";
 
 XDocument doc = XDocument.Load(csProjPath);
 XElement versionElement = doc.Root.Element("PropertyGroup").Element("Version");

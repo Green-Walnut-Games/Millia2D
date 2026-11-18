@@ -1,4 +1,4 @@
-namespace Millia2d.Resources.Loaders;
+namespace Millia2D.Resources.Loaders;
 
 public class TextLoader : IResourceLoader
 {

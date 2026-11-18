@@ -36,7 +36,7 @@ public class Scene
     {
         Actors.Add(actor);
 
-        if (!actor.hasStarted)
+        if (hasStarted && !actor.hasStarted)
         {
             actor.Components.ToList().ForEach(a => a.Preload());
             actor.Components.ToList().ForEach(a => a.Load());

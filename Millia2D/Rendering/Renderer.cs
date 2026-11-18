@@ -1,10 +1,10 @@
 using Millia2D;
-using Millia2d.Rendering.Shaders;
+using Millia2D.Rendering.Shaders;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
-using Vector3 = Millia2d.Mathematics.Vector3;
+using Vector3 = Millia2D.Mathematics.Vector3;
 
-namespace Millia2d.Rendering;
+namespace Millia2D.Rendering;
 
 public class Renderer
 {

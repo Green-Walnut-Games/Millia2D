@@ -1,6 +1,6 @@
 using Millia2D;
 
-namespace Millia2d.Rendering;
+namespace Millia2D.Rendering;
 
 public class Sprite : Component
 {

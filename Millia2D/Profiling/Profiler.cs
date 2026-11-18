@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Formats.Tar;
 using System.Text;
 
-namespace Millia2d.Profiling;
+namespace Millia2D.Profiling;
 
 /// <summary>
 /// Class useful for performing profiling of your games.

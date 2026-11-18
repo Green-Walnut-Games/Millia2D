@@ -12,7 +12,7 @@ public class Component
 
     public Actor? Actor { get; internal set; }
 
-    public bool hasStarted = false;
+    internal bool hasStarted = false;
 
     public Component()
     {
