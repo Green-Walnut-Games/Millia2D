@@ -1,6 +1,4 @@
 using Millia2D;
-using Millia2D;
-using Millia2D.Core;
 using Millia2D.Inputs;
 using Millia2D.Logging;
 using Millia2D.Mathematics;

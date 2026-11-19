@@ -1,6 +1,4 @@
-using System.Runtime.InteropServices;
 using ImGuiNET;
-using Millia2D;
 using Millia2D;
 using Millia2D.Inputs;
 using Millia2D.Profiling;

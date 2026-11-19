@@ -1,8 +1,5 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
-using System.Formats.Tar;
 using System.Text;
-using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace Millia2D.Profiling;
 
