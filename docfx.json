@@ -4,7 +4,7 @@
     {
       "src": [
         {
-          "src": "../Millia2D",
+          "src": "./Millia2D",
           "files": [
             "**/*.csproj"
           ]

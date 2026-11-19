@@ -2,7 +2,7 @@ using Millia2D;
 
 namespace tests.Core.ECS;
 
-public class ActorTests
+internal class ActorTests
 {
     [Test]
     public void ActorGetComponent()

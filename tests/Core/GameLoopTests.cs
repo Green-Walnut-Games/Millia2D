@@ -4,7 +4,7 @@ using OpenTK.Windowing.Common;
 
 namespace tests.Core;
 
-public class GameLoopTests
+internal class GameLoopTests
 {
     [Test]
     public void UpdateRunsCorrectAmountOfTimes()
@@ -44,7 +44,7 @@ public class GameLoopTests
     }
 }
 
-public class LoopCounter : Component
+internal class LoopCounter : Component
 {
     public int preloadCount;
     public int loadCount;

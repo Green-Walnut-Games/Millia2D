@@ -1,6 +1,6 @@
 using Dear_ImGui_Sample.Backends;
 using ImGuiNET;
-using Millia2D;
+using Millia2D.Inputs;
 using Millia2D.Profiling;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Common;
@@ -28,7 +28,7 @@ internal class OTKWindow : GameWindow
         );
 
         // Renderer onLoad here
-        MilliaGame.GameInstance.Renderer.OnLoad();
+        MilliaGame.Instance.Renderer.OnLoad();
 
         SetupImGui();
     }
@@ -41,7 +41,7 @@ internal class OTKWindow : GameWindow
         ImguiImplOpenTK4.Shutdown();
 
         // Renderer unload here
-        MilliaGame.GameInstance.Renderer.OnUnload();
+        MilliaGame.Instance.Renderer.OnUnload();
     }
 
     internal static DebugWindow DebugWindow { get; private set; } = new();
@@ -69,14 +69,10 @@ internal class OTKWindow : GameWindow
 
         double renderFrameTime = Profiler.MeasureTime(
             "Game instance render frame",
-            MilliaGame.GameInstance.Renderer.OnRenderFrame
+            MilliaGame.Instance.Renderer.OnRenderFrame
         );
 
-        Log.LiveMeasurementEngine("Render frame time", renderFrameTime);
-        Log.LiveMeasurementEngine(
-            "Actors",
-            MilliaGame.GameInstance.LoadedScenes.Sum(x => x.Actors.Count)
-        );
+        EngineTelemetry(renderFrameTime);
 
         if (isDebugOpen)
         {
@@ -86,6 +82,18 @@ internal class OTKWindow : GameWindow
         ImGuiPostRenderFrame();
 
         SwapBuffers();
+    }
+
+    private static void EngineTelemetry(double renderFrameTime)
+    {
+        Log.LiveDataEngine($"Mouse position X: ", Input.GetMousePosition().X);
+        Log.LiveDataEngine($"Mouse position Y: ", Input.GetMousePosition().Y);
+
+        Log.LiveMeasurementEngine("Render frame time", renderFrameTime);
+        Log.LiveMeasurementEngine(
+            "Actors",
+            MilliaGame.Instance.LoadedScenes.Sum(x => x.Actors.Count)
+        );
     }
 
     private static void ImGuiRenderSetup(FrameEventArgs args)

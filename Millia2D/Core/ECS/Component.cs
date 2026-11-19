@@ -1,3 +1,5 @@
+using Millia2D.Mathematics;
+
 namespace Millia2D;
 
 /// <summary>
@@ -11,6 +13,8 @@ public class Component
     public Guid GUID { get; private set; }
 
     public Actor? Actor { get; internal set; }
+
+    public Transform Transform => Actor.Transform;
 
     internal bool hasStarted = false;
 

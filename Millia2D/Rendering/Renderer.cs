@@ -1,12 +1,14 @@
+using System.Numerics;
 using Millia2D;
 using Millia2D.Rendering.Shaders;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using Vector3 = Millia2D.Mathematics.Vector3;
+using Vector4 = OpenTK.Mathematics.Vector4;
 
 namespace Millia2D.Rendering;
 
-public class Renderer
+internal class Renderer
 {
     int VertexBufferObject;
     int VertexArrayObject;
@@ -112,8 +114,25 @@ public class Renderer
         );
     }
 
+    static Matrix4 orthographicProjection;
+    static Matrix4 view;
+    static float windowWidth;
+    static float windowHeight;
+
     internal void OnRenderFrame()
     {
+        float gameHeight = 10;
+
+        // Use client size instead of window height in order to get true accurate size of playable area
+        windowHeight = MilliaGame.Instance.Window.otk_Window.ClientSize.Y;
+        windowWidth = MilliaGame.Instance.Window.otk_Window.ClientSize.X;
+
+        float aspect = windowWidth / windowHeight;
+        float gameWidth = aspect * gameHeight;
+
+        orthographicProjection = Matrix4.CreateOrthographic(gameWidth, gameHeight, -500f, 500f);
+        view = Matrix4.CreateTranslation(0, 0, 0);
+
         GL.BindVertexArray(VertexArrayObject);
         for (int i = 0; i < Sprites.Count; i++)
         {
@@ -147,32 +166,15 @@ public class Renderer
 
     private static void ApplyTransformations(Sprite sprite, Shader activeShader)
     {
-        float gameHeight = 10;
-
-        float windowHeight = MilliaGame.GameInstance.Window.Height;
-        float windowWidth = MilliaGame.GameInstance.Window.Width;
-
-        float aspect = windowWidth / windowHeight;
-        float gameWidth = aspect * gameHeight;
-
-        Matrix4 orthographicProjection = Matrix4.CreateOrthographic(
-            gameWidth,
-            gameHeight,
-            -500f,
-            500f
-        );
-
-        Matrix4 view = Matrix4.CreateTranslation(0, 0, 0);
-
-        Vector3 spriteRotation = sprite.Actor.Transform.Rotation;
+        Vector3 spriteRotation = sprite.Transform.Rotation;
         Matrix4 rotationZ = Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(spriteRotation.Z));
         Matrix4 rotationY = Matrix4.CreateRotationY(MathHelper.DegreesToRadians(spriteRotation.Y));
         Matrix4 rotationX = Matrix4.CreateRotationX(MathHelper.DegreesToRadians(spriteRotation.X));
 
-        Vector3 spriteScale = sprite.Actor.Transform.Scale;
+        Vector3 spriteScale = sprite.Transform.Scale;
         Matrix4 scale = Matrix4.CreateScale(spriteScale.X, spriteScale.Y, spriteScale.Z);
 
-        Vector3 spritePosition = sprite.Actor.Transform.Position;
+        Vector3 spritePosition = sprite.Transform.Position;
         Matrix4 position = Matrix4.CreateTranslation(
             spritePosition.X,
             spritePosition.Y,
@@ -183,6 +185,40 @@ public class Renderer
 
         int transformLocation = GL.GetUniformLocation(activeShader.Handle, "transform");
         GL.UniformMatrix4(transformLocation, true, ref finalTrans);
+    }
+
+    internal static Vector3 GetScreenCoordinatesFromWorld(Vector3 coords)
+    {
+        Matrix4 resultMatrix = view * orthographicProjection;
+
+        Vector4 result = Vector4.TransformRow(
+            new Vector4(coords.X, coords.Y, coords.Z, 1),
+            resultMatrix
+        );
+
+        // scale result by the window size. Right now, result is in NDC.
+        // NDC is -1 to 1, whereas screen would be 0 to width
+        // + 1, / 2, * width
+
+        float x = (result.X + 1) / 2 * windowWidth;
+        float y = (result.Y + 1) / 2 * windowHeight;
+
+        return new Vector3(x, windowHeight - y, 0);
+    }
+
+    internal static Vector3 GetWorldCoordinatesFromScreen(Vector3 coords)
+    {
+        float NDCX = coords.X * 2 / windowWidth - 1;
+        float NDCY = coords.Y * 2 / windowHeight - 1;
+
+        Matrix4 resultMatrix = view * orthographicProjection;
+
+        Vector4 inverseResult = Vector4.TransformRow(
+            new Vector4(NDCX, NDCY, coords.Z, 1),
+            resultMatrix.Inverted()
+        );
+
+        return new Vector3(inverseResult.X, -inverseResult.Y, 0);
     }
 
     internal void OnUnload()
