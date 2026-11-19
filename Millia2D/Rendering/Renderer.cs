@@ -123,6 +123,7 @@ internal class Renderer
     {
         float gameHeight = 10;
 
+        // Use client size instead of window height in order to get true accurate size of playable area
         windowHeight = MilliaGame.Instance.Window.otk_Window.ClientSize.Y;
         windowWidth = MilliaGame.Instance.Window.otk_Window.ClientSize.X;
 
