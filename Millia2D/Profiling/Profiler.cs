@@ -107,14 +107,9 @@ public static class Profiler
     internal static void AddLiveMeasurement(
         string message,
         double value,
-        Dictionary<string, TimeSeriesData>? target = null
+        Dictionary<string, TimeSeriesData> target
     )
     {
-        if (target == null)
-        {
-            target = LiveMeasurements;
-        }
-
         if (target.ContainsKey(message))
         {
             TimeSeriesData data = target[message];
@@ -139,16 +134,21 @@ public static class Profiler
     }
 
     internal static Dictionary<string, double> LiveData = new();
+    internal static Dictionary<string, double> EngineLiveData = new();
 
-    internal static void AddLiveData(string message, double value)
+    internal static void AddLiveData(
+        string message,
+        double value,
+        Dictionary<string, double> target
+    )
     {
-        if (LiveData.ContainsKey(message))
+        if (target.ContainsKey(message))
         {
-            LiveData[message] = value;
+            target[message] = value;
         }
         else
         {
-            LiveData.Add(message, value);
+            target.Add(message, value);
         }
     }
 }

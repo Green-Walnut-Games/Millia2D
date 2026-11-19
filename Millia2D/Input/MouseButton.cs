@@ -1,4 +1,4 @@
-namespace Millia2D.Input;
+namespace Millia2D.Inputs;
 
 /// <summary>
 ///     Specifies the buttons of a mouse.

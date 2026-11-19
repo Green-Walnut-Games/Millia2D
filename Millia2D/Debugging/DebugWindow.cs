@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 using ImGuiNET;
 using Millia2D;
 using Millia2D;
-using Millia2D.Input;
+using Millia2D.Inputs;
 using Millia2D.Profiling;
 using OpenTK.Windowing.Common;
 
@@ -37,12 +37,12 @@ internal class DebugWindow
         ImGui.End();
     }
 
-    private void ShowLiveData()
+    private void ShowLiveData(Dictionary<string, double> target)
     {
-        if (Profiler.LiveData.Count > 0)
+        if (target.Count > 0)
         {
             ImGui.Text("Live data: ");
-            foreach (var data in Profiler.LiveData)
+            foreach (var data in target)
             {
                 ImGui.Text($"{data.Key}: {data.Value}");
             }
@@ -79,7 +79,7 @@ internal class DebugWindow
     {
         ImGui.Begin("Live measurements");
 
-        ShowLiveData();
+        ShowLiveData(Profiler.LiveData);
 
         ShowLiveMeasurementsGraphs(data);
 
@@ -119,6 +119,8 @@ internal class DebugWindow
     private void DebuggerTab()
     {
         ImGui.Begin("Debugger");
+
+        ShowLiveData(Profiler.EngineLiveData);
 
         MilliaGame game = MilliaGame.Instance;
         ImGui.Text($"Loaded worlds: {game.LoadedScenes.Count}");

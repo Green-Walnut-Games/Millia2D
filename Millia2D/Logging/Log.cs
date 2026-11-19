@@ -49,12 +49,17 @@ public static class Log
     public static void LiveMeasurement(string message, double value)
     {
         Serilog.Log.Debug($"{message}: {value}");
-        Profiler.AddLiveMeasurement(message, value);
+        Profiler.AddLiveMeasurement(message, value, Profiler.LiveMeasurements);
     }
 
     public static void LiveData(string message, double value)
     {
-        Profiler.AddLiveData(message, value);
+        Profiler.AddLiveData(message, value, Profiler.LiveData);
+    }
+
+    internal static void LiveDataEngine(string message, double value)
+    {
+        Profiler.AddLiveData(message, value, Profiler.EngineLiveData);
     }
 
     internal static void LiveMeasurementEngine(string message, double value)

@@ -1,7 +1,7 @@
 using Millia2D;
 using Millia2D;
 using Millia2D.Core;
-using Millia2D.Input;
+using Millia2D.Inputs;
 using Millia2D.Logging;
 using Millia2D.Mathematics;
 using Millia2D.Rendering;
@@ -52,8 +52,6 @@ public class Circle : Component
 
         if (Input.IsMouseButtonDown(MouseButton.Left))
         {
-            Log.Info(Input.GetScreenCoordinatesFromWorld(new Vector3(0, 0)).ToString());
-            Log.Info(Input.GetWorldCoordinatesFromScreen(new Vector3(1920, 0)).ToString());
             Actor circle = new();
             circle.Transform.Position = Input.GetWorldCoordinatesFromScreen(
                 Input.GetMousePosition()
@@ -80,8 +78,5 @@ public class Circle : Component
             Transform.Position + direction * speed,
             1
         );
-
-        Log.LiveData($"Mouse position X: ", Input.GetMousePosition().X);
-        Log.LiveData($"Mouse position Y: ", Input.GetMousePosition().Y);
     }
 }

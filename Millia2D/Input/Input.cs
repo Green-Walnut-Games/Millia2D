@@ -1,4 +1,4 @@
-namespace Millia2D.Input;
+namespace Millia2D.Inputs;
 
 using Millia2D.Mathematics;
 using Millia2D.Rendering;
@@ -132,7 +132,11 @@ public static class Input
 
         (Keys positive, Keys negative) axis = InputAxis[axisName];
 
-        if (IsKeyDown(axis.positive))
+        if (IsKeyDown(axis.positive) && IsKeyDown(axis.negative))
+        {
+            return 0;
+        }
+        else if (IsKeyDown(axis.positive))
         {
             return 1;
         }
