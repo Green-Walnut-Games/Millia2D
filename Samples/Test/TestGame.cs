@@ -25,7 +25,8 @@ public class TestGame : MilliaGame
         Log.Info(circle.Transform.Position.ToString());
 
         Sprite circleSprite = new();
-        circleSprite.Texture = texture;
+        Texture circleTexture = new("assets/circle.png");
+        circleSprite.Texture = circleTexture;
         circle.AddComponent(circleSprite);
         circle.AddComponent(new Circle());
         circle.Transform.Scale = new Vector3(0.2f, 0.2f, 1);
