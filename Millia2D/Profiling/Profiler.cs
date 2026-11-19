@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Formats.Tar;
 using System.Text;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace Millia2D.Profiling;
 
@@ -134,6 +135,20 @@ public static class Profiler
             data.offset = 0;
 
             target.Add(message, data);
+        }
+    }
+
+    internal static Dictionary<string, double> LiveData = new();
+
+    internal static void AddLiveData(string message, double value)
+    {
+        if (LiveData.ContainsKey(message))
+        {
+            LiveData[message] = value;
+        }
+        else
+        {
+            LiveData.Add(message, value);
         }
     }
 }

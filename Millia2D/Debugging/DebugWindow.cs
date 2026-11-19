@@ -2,6 +2,7 @@ using System.Runtime.InteropServices;
 using ImGuiNET;
 using Millia2D;
 using Millia2D;
+using Millia2D.Input;
 using Millia2D.Profiling;
 using OpenTK.Windowing.Common;
 
@@ -14,6 +15,7 @@ internal class DebugWindow
     internal void OnUpdateFrame(FrameEventArgs e)
     {
         DebuggerTab();
+        InputsTab();
 
         // Keep performance last so we always see FPS data when we start debug menu
         PerformanceTab(e);
@@ -35,9 +37,50 @@ internal class DebugWindow
         ImGui.End();
     }
 
+    private void ShowLiveData()
+    {
+        if (Profiler.LiveData.Count > 0)
+        {
+            ImGui.Text("Live data: ");
+            foreach (var data in Profiler.LiveData)
+            {
+                ImGui.Text($"{data.Key}: {data.Value}");
+            }
+            ImGui.Text("");
+        }
+    }
+
+    private void InputsTab()
+    {
+        ImGui.Begin("Input");
+
+        foreach (var val in Enum.GetValues(typeof(Keys)))
+        {
+            if (Input.IsKeyDown((Keys)val))
+            {
+                ImGui.Text($"Down: {(Keys)val}");
+            }
+
+            if (Input.IsKeyPressed((Keys)val))
+            {
+                ImGui.Text($"Pressed: {(Keys)val}");
+            }
+
+            if (Input.IsKeyReleased((Keys)val))
+            {
+                ImGui.Text($"Released: {(Keys)val}");
+            }
+        }
+
+        ImGui.End();
+    }
+
     private void LiveMeasurementsTab(Dictionary<string, TimeSeriesData> data)
     {
         ImGui.Begin("Live measurements");
+
+        ShowLiveData();
+
         ShowLiveMeasurementsGraphs(data);
 
         ImGui.End();

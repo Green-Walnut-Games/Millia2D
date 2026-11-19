@@ -45,4 +45,24 @@ public struct Vector3
     {
         return new(left.X * right, left.Y * right, left.Z * right);
     }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj == null)
+            return false;
+
+        Vector3 objVector = (Vector3)obj;
+
+        return Equals(objVector);
+    }
+
+    public bool Equals(Vector3 vec)
+    {
+        return vec.X == X && vec.Y == Y && vec.Z == Z;
+    }
+
+    public override string ToString()
+    {
+        return $"({X}, {Y}, {Z})";
+    }
 }

@@ -2,7 +2,7 @@ using Millia2D;
 
 namespace tests.Core.ECS;
 
-public class SceneTests
+internal class SceneTests
 {
     Scene activeScene;
 

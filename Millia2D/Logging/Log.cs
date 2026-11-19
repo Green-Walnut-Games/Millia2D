@@ -5,6 +5,9 @@ using Millia2D.Profiling;
 using Serilog;
 using Serilog.Core;
 
+/// <summary>
+/// Class used to log data to the console or the debugging window.
+/// </summary>
 public static class Log
 {
     // Verbosity levels
@@ -47,6 +50,11 @@ public static class Log
     {
         Serilog.Log.Debug($"{message}: {value}");
         Profiler.AddLiveMeasurement(message, value);
+    }
+
+    public static void LiveData(string message, double value)
+    {
+        Profiler.AddLiveData(message, value);
     }
 
     internal static void LiveMeasurementEngine(string message, double value)

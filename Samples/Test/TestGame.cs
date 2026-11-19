@@ -1,6 +1,7 @@
 using Millia2D;
 using Millia2D;
 using Millia2D.Core;
+using Millia2D.Input;
 using Millia2D.Logging;
 using Millia2D.Mathematics;
 using Millia2D.Rendering;
@@ -12,26 +13,16 @@ public class TestGame : MilliaGame
 
     public override void Init()
     {
+        Input.DefineAxis("Horizontal", Keys.D, Keys.A);
+        Input.DefineAxis("Vertical", Keys.W, Keys.S);
+
         Log.SetLogLevel(LogLevel.Info);
         world = new("World");
 
-        Actor spawnerActor = new();
-        Spawner spawner = new();
-        spawnerActor.AddComponent(spawner);
-
-        world.AddActor(spawnerActor);
-
-        AddScene(world);
-    }
-}
-
-public class Spawner : Component
-{
-    public override void PhysicsUpdate(double deltaTime)
-    {
-        base.PhysicsUpdate(deltaTime);
-
         Actor circle = new();
+        circle.Transform.Position = new Vector3(2, 2);
+
+        Log.Info(circle.Transform.Position.ToString());
 
         Texture circleTexture = new("assets/circle.png");
         Sprite circleSprite = new();
@@ -40,48 +31,57 @@ public class Spawner : Component
         circle.AddComponent(new Circle());
         circle.Transform.Scale = new Vector3(0.2f, 0.2f, 1);
 
-        TestGame.world.AddActor(circle);
+        world.AddActor(circle);
 
-        Log.LiveMeasurement("Delta time physics", MathF.Tan((float)Clock.totalElapsedTime));
+        AddScene(world);
     }
 }
 
 public class Circle : Component
 {
-    Random rnd = new();
-
-    float initX,
-        initY;
-
-    float speed = 0.001f;
+    float speed = 0.05f;
 
     Vector3 direction;
-
-    public override void Preload()
-    {
-        base.Preload();
-        initX = (float)rnd.NextDouble() * 20 - 10;
-        initY = (float)rnd.NextDouble() * 10 - 5;
-
-        direction = new(initX, initY, 0);
-
-        // Randomize position
-        Actor.Transform.Position = new Vector3(initX, initY, 0);
-    }
 
     public override void Update(double deltaTime)
     {
         base.Update(deltaTime);
 
-        if (rnd.NextDouble() > 0.8)
-        {
-            direction = new((float)rnd.NextDouble() * 2 - 1, (float)rnd.NextDouble() * 2 - 1);
-        }
+        direction.X = (float)Input.GetAxis("Horizontal");
+        direction.Y = (float)Input.GetAxis("Vertical");
 
-        Actor.Transform.Position = Math.Lerp(
-            Actor.Transform.Position,
-            Actor.Transform.Position + direction * speed,
-            5
+        if (Input.IsMouseButtonDown(MouseButton.Left))
+        {
+            Log.Info(Input.GetScreenCoordinatesFromWorld(new Vector3(0, 0)).ToString());
+            Log.Info(Input.GetWorldCoordinatesFromScreen(new Vector3(1920, 0)).ToString());
+            Actor circle = new();
+            circle.Transform.Position = Input.GetWorldCoordinatesFromScreen(
+                Input.GetMousePosition()
+            );
+
+            Log.Info(circle.Transform.Position.ToString());
+
+            Texture circleTexture = new("assets/circle.png");
+            Sprite circleSprite = new();
+            circleSprite.Texture = circleTexture;
+            circle.AddComponent(circleSprite);
+            circle.Transform.Scale = new Vector3(0.2f, 0.2f, 1);
+
+            TestGame.world.AddActor(circle);
+        }
+    }
+
+    public override void PhysicsUpdate(double deltaTime)
+    {
+        base.PhysicsUpdate(deltaTime);
+
+        Transform.Position = Math.Lerp(
+            Transform.Position,
+            Transform.Position + direction * speed,
+            1
         );
+
+        Log.LiveData($"Mouse position X: ", Input.GetMousePosition().X);
+        Log.LiveData($"Mouse position Y: ", Input.GetMousePosition().Y);
     }
 }

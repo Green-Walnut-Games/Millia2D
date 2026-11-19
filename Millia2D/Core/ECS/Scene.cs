@@ -36,11 +36,14 @@ public class Scene
     {
         Actors.Add(actor);
 
+        Log.Info($"Scene {hasStarted} actor {actor.hasStarted}");
+
         if (hasStarted && !actor.hasStarted)
         {
             actor.Components.ToList().ForEach(a => a.Preload());
             actor.Components.ToList().ForEach(a => a.Load());
             actor.hasStarted = true;
+            Log.Info("Started new actor");
         }
     }
 
