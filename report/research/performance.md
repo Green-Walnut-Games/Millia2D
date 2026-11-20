@@ -6,7 +6,63 @@ A performance target I could aim for is 60fps for ~100,000 actors in the scene.
 
 An ECS will be a data oriented system which acts upon all entities of the same type at once, instead of each entity performing its own calculation.
 
-## Multithreading
+ECS is generally thought of as a composition-over-inheritance pattern. Instead of deeply nested class hierarchies often used in OOP, ECS would provide a data-oriented design, which can provide great benefits to performance, and separation of concerns
+
+### Unity DOTS
+
+Unity DOTS uses the Entity Component System (ECS) design pattern. This is most often used in games, but sometimes used outside of the gaming industry.
+Inside DOTS, entities and components compose are used for data, and systems for code interacting with that data.
+
+> From Unity DOTS book
+
+An entity is composed of components, where each component is usually C# structs. Components can be added/removed from an entity over its lifetime.
+
+Unlike traditional object-oriented patterns in game programming, entities or their components do not usually have their own methods.
+Instead, each "system" has an update method invoked once per frame, and these updates will read and modify the components of the desired entities.
+
+For example, in a monster game, there may be a system called `MonsterMoveSystem` which modifies the Transform components of every monster entity.
+
+#### Chunks and archetypes
+
+In Unity's DOTS, each variation of components on an entity is called an "archetype", and each archetype is stored together in memory. Adding a component to an entity or removing a component from an entity moves the entity to a different archetype.
+
+![alt text](image.png)
+
+Within an archetype, entities and their components are stored in blocks of memory called chunks. Each chunk stores up to 128 entities, and are stored in their own array in the chunk.
+
+![[Pasted image 20261119223543.png]]
+
+The benefit of this system is incredibly fast querying over large numbers of entities. Also, because the arrays are tightly packed, the amount of cache misses decreases greatly, increasing efficiency and the potential ceiling of performance. 
+
+Caching can also be used to further speed up this process.
+
+##### C# Structs
+
+Generally in C#, developers use `classes`. These are `reference types`, meaning they hold a reference which points to the actual data somewhere else on the heap.
+
+Structs are `value types`. Instead of holding a pointer to the data, these **are** the data, and are stored on the stack.
+
+The stack offers better cache locality, and overall better performance so structs should generally be used in high-performance scenarios. However, there are certain cases which they aren't the best for.
+
+If a struct is quite large in size, copying its values may take some time and thus decrease performance, so it is recommended that structs are kept small and lightweight.
+
+#### Memory
+
+A very good target is having components of the same type be contiguous in memory - making iterating through all entities with that component incredibly easy. This is why Unity DOTS's approach below works so well - their table like data structure allows extremely easy querying.
+
+> Harkonen: "The ideal layout can be achieved by breaking objects into different components, and
+> grouping those components together in the memory by their type. This results in
+> homogenous and sequentially processable data."
+
+#### Multithreading
+
+DOD (Data Oriented Design) has a big benefit when it comes to separation of concerns and multithreading. Classically, OOP struggles to take full advantage of multithreading sometimes - differenet components may be using the same data and there may be conflicts, making working on multiple threads much harder.
+
+In DOD and ECS especially, it can be a lot easier splitting functionality into different threads.
+
+> Maybe in the benchmark game, the people simulation is done on one thread, whilst the ship simulation is done on another. Then the master thread combines the result at the end of each frame/simulation tick?
+
+### Unity DOTS
 
 Unity DOTS brings in the C# Job System. From their Unity DOTS book, the C# job system is described with the following:
 
