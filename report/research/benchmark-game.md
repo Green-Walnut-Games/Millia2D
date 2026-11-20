@@ -1,46 +1,59 @@
-# Benchmark Game
+# Solar System Defense
 
-The benchmark game will need to be simple enough for me to have enough time to program in 3 engines, but also have enough complexity to allow the game to perform heavy calculations to take advantage of Millia2D's capabilitys, or any research I have found.
+Our solar system is under attack. You have been put in charge of the United Earth Initiative, and must spend resources wisely in order to protect our territory.
 
-## Ideas
+## Gameplay
 
-Space station empire - simulate different companies starting on different stars, colonizing the universe
-    - semi-colony builder, kind of like 4X Foundations
-    - new stars would spawn on the edge
-    - able to build/purchase stations around stars
-    - each station may have its own population of people, with needs and wants
-Why it would work:
-- late game, could have hundreds of stations interacting with each other
-- two systems: population and commerce
-    - population would need every person having their own routines/jobs/families
-    - commerce would handle inter-station trading and migration
+Tower defense elements, with auto-battler elements in terms of squads of units. Enemies will become increasingly harder over time. The goal is to see how long you can survive.
 
-Alien invasion game - start with a tiny settlement in a world invaded by aliens. Expand whilst more and more aliens attack.
-    - colony builder/tower defense
-    - colonist system and alien system
+### Building
 
-World wide colony game - create different colonies throughout the world, each one having different resources/purpose
-    - similar to rimworld
-    - each colony would interact with each other, trade, etc.
+You are able to build various stations/structures throughout the solar system:
+- Shipyard: allows damaged ships to be repaired.
+- Depot: allows ships to replenish supplies and ammo.
+- Construction yard: allows ships to be created.
+- Laser station: fires lasers at nearby enemy ships.
+- Torpedo launcher: launches torpedoes at nearby enemy ships.
+- Communications satellite: buffs allied ships, and increases building range.
+- Colony station: increases population and allows you to build sub-modules inside the station.
+- Mineral harvester: harvests minerals and can only be placed around planets.
 
-War Toy - simulate a grand war on a large battlefield
-    - place squadrons of soldiers, tanks
-    - place settlements/supply points
-    - create trade routes
-    - game simulates the outcome and shows result
+#### Colony building
 
-Mega Space Ship - conquer planets with your warship
-    - start small with only your own ship
-    - start gathering your fleet of ships from each planet/station you conquer
-    - ships battle other AI's fleets
-    - how far can you get?
+Inside each colony, you may build sub-modules:
+- Hydroponics: allows faster population growth
+- Living quarters: increases max population inside a station
+- Merchants' quarters: increases credits profits.
+- Research lab: uses scavenged alien technology to improve existing systems.
+- War office: increases max ship capacity.
+- Admin office: increases maximum colony capacity.
+- Clinic: heals individual people.
 
-Solar System Defense - defend solar system against alien invaders
-    - setup phase, then action phase
-    - setup you place depots, give ship orders
-    - each action phase will have a specific entry into the solar system
-    - each action phase will be harder
-    - place buildings/stations throughout universe
-    - each action phase acts like a mini grand strategy game, with resources being able to decrease during the turn
-    via things like ship upkeep, people on ships to be individually tracked?, alien ships acting completely differently
-    and potentially trying to expand and set up bases themselves.
+These submodules will be built via buttons in the colony station menu, and not be placed individually inside each station. These will basically be numbers.
+
+### Units
+
+You are able to construct additional ships and vessels from construction yards.
+- Repair drone swarm: repairs ships nearby in a radius
+- Corvette: launches kinetic projectiles, weak armour
+- Destroyer: launches kinetic projectiles and lasers, medium armour 
+- Cruiser: launches torpedoes.
+- Carrier: launches disposable attack drones.
+- Titan: massive long-range laser beam.
+
+Units will automatically group up before an attack, then get into formations and attack any incoming aliens together, without the player's control.???
+> Not sure if it would be cooler for players to control these.
+
+### People
+
+Each of your staff members is individually simulated. John Garrick may be in charge of running the Clinic, whilst Michelle Key will be commanding your Titan. People will need to travel around the solar system for various things - make sure there are defended routes between each station.
+
+People will be tracked based on:
+- job
+- name
+- age
+- family
+
+### Progression
+
+Each run will be split into levels. Each level unlocks a new planet, and more territory to build inside of. Each solar system will be randomly generated, with different planets each time.
