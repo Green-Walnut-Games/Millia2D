@@ -8,6 +8,7 @@ using Millia2D.Core;
 using Millia2D.Inputs;
 using Millia2D.Profiling;
 using Millia2D.Rendering;
+using OpenTK.Graphics.ES11;
 using OpenTK.Windowing.Common;
 using Windowing;
 
@@ -138,7 +139,10 @@ public class MilliaGame
     {
         Clock.IncrementTimer(eventArgs.Time);
 
-        Input.OnRenderFrame(eventArgs);
+        if (Window != null)
+        {
+            Input.OnRenderFrame(eventArgs);
+        }
 
         // Handle physics update
         // If more than physics update time has elapsed, we need to run a physics update
