@@ -19,20 +19,7 @@ jobs:
         dotnet-version: 8.x
     - name: Semver Script
       id: semver
-      run: |
-        set +e
-        dotnet run scripts/increment-version.cs
-        exit_code=$?
-        set -e
-
-        if [ "$exit_code" -eq 67]; then
-          echo "skip=true" >> "$GITHUB_OUTPUT"
-          echo "No version bump needed."
-        elif [ "$exit_code" -ne 0 ]; then
-          exit "$exit_code"
-        else
-          echo "skip=false" >> "$GITHUB_OUTPUT"
-        fi
+      run: dotnet run scripts/increment-version.cs
       env:
         PR_NAME: "${{ github.event.head_commit.message }}"
     - name: Commit & Push version change

@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using System.Xml.Linq;
 
 string prName = Environment.GetEnvironmentVariable("PR_NAME").ToLower();
@@ -7,7 +8,7 @@ int major,
 
 if (prName.Contains("chore: Autopublish"))
 {
-    Environment.Exit(67);
+    Skip();
 }
 
 string csProjPath = "Millia2D/Millia2D.csproj";
@@ -34,7 +35,7 @@ if (!prName.Contains(":"))
 
 if (prName.Contains("chore:") || prName.Contains("docs:"))
 {
-    Environment.Exit(67);
+    Skip();
 }
 else if (prName.Contains("!"))
 {
@@ -63,4 +64,10 @@ string githubEnvPath = Environment.GetEnvironmentVariable("GITHUB_ENV");
 if (!string.IsNullOrEmpty(githubEnvPath))
 {
     File.AppendAllText(githubEnvPath, $"FINAL_VERSION={finalVersion}{Environment.NewLine}");
+}
+
+void Skip()
+{
+    File.AppendAllText(githubEnvPath, "skip=true\n");
+    return 0;
 }
