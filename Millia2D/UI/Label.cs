@@ -21,8 +21,6 @@ public class Label : Component
     public int BackgroundWidth { get; internal set; }
     public int BackgroundHeight { get; internal set; }
 
-    private void GetWidth() { }
-
     public override void Preload()
     {
         base.Preload();
@@ -35,15 +33,11 @@ public class Label : Component
         // TODO: Change this to use full rect sizings, for now use just background rect
         // so buttons have to have a background to be clickable
 
-        Log.Info($"Click position: {position}");
-
         int topLeftX = (int)Transform.Position.X - BackgroundPadding / 2;
         int topLeftY = (int)Transform.Position.Y - BackgroundPadding / 2;
 
         int botRightX = (int)Transform.Position.X + BackgroundWidth + BackgroundPadding / 2;
         int botRightY = (int)Transform.Position.Y + BackgroundHeight + BackgroundPadding / 2;
-
-        Log.Info($"Bounds: {topLeftX}, {topLeftY} and {botRightX}, {botRightY}");
 
         if (position.X < topLeftX || position.X > botRightX)
         {

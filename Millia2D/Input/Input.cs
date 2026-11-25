@@ -3,6 +3,7 @@ namespace Millia2D.Inputs;
 using Millia2D.Mathematics;
 using Millia2D.Rendering;
 using Millia2D.UI;
+using OpenTK.Windowing.Common;
 using OTKKeys = OpenTK.Windowing.GraphicsLibraryFramework.Keys;
 using OTKMouseButton = OpenTK.Windowing.GraphicsLibraryFramework.MouseButton;
 using Vector2 = OpenTK.Mathematics.Vector2;
@@ -12,6 +13,36 @@ using Vector2 = OpenTK.Mathematics.Vector2;
 /// </summary>
 public static class Input
 {
+    internal static void SetupEvents()
+    {
+        MilliaGame.Instance.Window.otk_Window.MouseMove += OnMouseMove;
+    }
+
+    private static void OnMouseMove(MouseMoveEventArgs args)
+    {
+        Vector3 mousePosition = GetMousePosition();
+
+        UIRenderer rend = MilliaGame.Instance.UIRenderer;
+
+        foreach (Label label in rend.Labels)
+        {
+            if (!(label is Button))
+            {
+                continue;
+            }
+
+            Button uiButton = label as Button;
+
+            if (!label.IsPositionWithinRect(mousePosition))
+            {
+                uiButton.isHovered = false;
+                continue;
+            }
+
+            uiButton.isHovered = true;
+        }
+    }
+
     /// <summary>
     /// Returns true when the specified key is being held down in the current frame.
     /// </summary>
@@ -71,13 +102,10 @@ public static class Input
         UIRenderer rend = MilliaGame.Instance.UIRenderer;
         Vector3 mousePressLocation = GetMousePosition();
 
-        Log.Info($"Label count: {rend.Labels.Count}");
-
         foreach (Label label in rend.Labels)
         {
             if (!label.IsPositionWithinRect(mousePressLocation))
             {
-                Log.Info("Position not within rect");
                 continue;
             }
 
@@ -85,7 +113,6 @@ public static class Input
             // How do we cancel event to everything else?
             if (!(label is Button))
             {
-                Log.Info("Label is not a button");
                 continue;
             }
 
@@ -118,13 +145,10 @@ public static class Input
         UIRenderer rend = MilliaGame.Instance.UIRenderer;
         Vector3 mousePressLocation = GetMousePosition();
 
-        Log.Info($"Label count: {rend.Labels.Count}");
-
         foreach (Label label in rend.Labels)
         {
             if (!label.IsPositionWithinRect(mousePressLocation))
             {
-                Log.Info("Position not within rect");
                 continue;
             }
 
@@ -132,7 +156,6 @@ public static class Input
             // How do we cancel event to everything else?
             if (!(label is Button))
             {
-                Log.Info("Label is not a button");
                 continue;
             }
 

@@ -124,13 +124,35 @@ internal class UIRenderer : IDisposable
             label.BackgroundWidth = label.Width + label.BackgroundPadding;
             label.BackgroundHeight = label.Height + label.BackgroundPadding;
 
-            FillBackground(
-                (int)label.Transform.Position.X - label.BackgroundPadding / 2,
-                (int)label.Transform.Position.Y - label.BackgroundPadding / 2,
-                (int)result.Width + label.BackgroundPadding,
-                (int)result.Height + label.BackgroundPadding,
-                backgroundColor
-            );
+            if (label is Button)
+            {
+                Button button = label as Button;
+
+                BlurgColor hoverColor = new(
+                    button.HoverColor.R,
+                    button.HoverColor.G,
+                    button.HoverColor.B,
+                    button.HoverColor.A
+                );
+
+                FillBackground(
+                    (int)label.Transform.Position.X - label.BackgroundPadding / 2,
+                    (int)label.Transform.Position.Y - label.BackgroundPadding / 2,
+                    (int)result.Width + label.BackgroundPadding,
+                    (int)result.Height + label.BackgroundPadding,
+                    button.isHovered ? hoverColor : backgroundColor
+                );
+            }
+            else
+            {
+                FillBackground(
+                    (int)label.Transform.Position.X - label.BackgroundPadding / 2,
+                    (int)label.Transform.Position.Y - label.BackgroundPadding / 2,
+                    (int)result.Width + label.BackgroundPadding,
+                    (int)result.Height + label.BackgroundPadding,
+                    backgroundColor
+                );
+            }
         }
 
         DrawRects(result, (int)label.Transform.Position.X, (int)label.Transform.Position.Y);

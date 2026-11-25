@@ -5,6 +5,7 @@
 namespace Millia2D;
 
 using Millia2D.Core;
+using Millia2D.Inputs;
 using Millia2D.Profiling;
 using Millia2D.Rendering;
 using OpenTK.Windowing.Common;
@@ -50,6 +51,8 @@ public class MilliaGame
 
         using (Window.otk_Window)
         {
+            Input.SetupEvents();
+
             Window.otk_Window.UpdateFrame += UpdateFrame;
             Window.otk_Window.Run();
 
