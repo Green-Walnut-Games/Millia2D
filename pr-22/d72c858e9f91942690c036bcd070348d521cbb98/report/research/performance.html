@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Performance metrics | millia2d </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Performance metrics | millia2d ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Green-Walnut-Games/Millia2D/blob/22/merge/report/research/performance.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="millia2d">
+            millia2d
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="performance-metrics">Performance metrics</h1>
+
+<p>A performance target I could aim for is 60fps for ~100,000 actors in the scene.</p>
+<h2 id="entity-component-system">Entity Component System</h2>
+<p>An ECS will be a data oriented system which acts upon all entities of the same type at once, instead of each entity performing its own calculation.</p>
+<p>ECS is generally thought of as a composition-over-inheritance pattern. Instead of deeply nested class hierarchies often used in OOP, ECS would provide a data-oriented design, which can provide great benefits to performance, and separation of concerns</p>
+<h3 id="unity-dots">Unity DOTS</h3>
+<p>Unity DOTS uses the Entity Component System (ECS) design pattern. This is most often used in games, but sometimes used outside of the gaming industry.
+Inside DOTS, entities and components compose are used for data, and systems for code interacting with that data.</p>
+<blockquote>
+<p>From Unity DOTS book</p>
+</blockquote>
+<p>An entity is composed of components, where each component is usually C# structs. Components can be added/removed from an entity over its lifetime.</p>
+<p>Unlike traditional object-oriented patterns in game programming, entities or their components do not usually have their own methods.
+Instead, each &quot;system&quot; has an update method invoked once per frame, and these updates will read and modify the components of the desired entities.</p>
+<p>For example, in a monster game, there may be a system called <code>MonsterMoveSystem</code> which modifies the Transform components of every monster entity.</p>
+<h4 id="chunks-and-archetypes">Chunks and archetypes</h4>
+<p>In Unity's DOTS, each variation of components on an entity is called an &quot;archetype&quot;, and each archetype is stored together in memory. Adding a component to an entity or removing a component from an entity moves the entity to a different archetype.</p>
+<p><img src="image.png" alt="alt text"></p>
+<p>Within an archetype, entities and their components are stored in blocks of memory called chunks. Each chunk stores up to 128 entities, and are stored in their own array in the chunk.</p>
+<p>![[Pasted image 20261119223543.png]]</p>
+<p>The benefit of this system is incredibly fast querying over large numbers of entities. Also, because the arrays are tightly packed, the amount of cache misses decreases greatly, increasing efficiency and the potential ceiling of performance.</p>
+<p>Caching can also be used to further speed up this process.</p>
+<h5 id="c-structs">C# Structs</h5>
+<p>Generally in C#, developers use <code>classes</code>. These are <code>reference types</code>, meaning they hold a reference which points to the actual data somewhere else on the heap.</p>
+<p>Structs are <code>value types</code>. Instead of holding a pointer to the data, these <strong>are</strong> the data, and are stored on the stack.</p>
+<p>The stack offers better cache locality, and overall better performance so structs should generally be used in high-performance scenarios. However, there are certain cases which they aren't the best for.</p>
+<p>If a struct is quite large in size, copying its values may take some time and thus decrease performance, so it is recommended that structs are kept small and lightweight.</p>
+<h4 id="memory">Memory</h4>
+<p>A very good target is having components of the same type be contiguous in memory - making iterating through all entities with that component incredibly easy. This is why Unity DOTS's approach below works so well - their table like data structure allows extremely easy querying.</p>
+<blockquote>
+<p>Harkonen: &quot;The ideal layout can be achieved by breaking objects into different components, and
+grouping those components together in the memory by their type. This results in
+homogenous and sequentially processable data.&quot;</p>
+</blockquote>
+<h4 id="multithreading">Multithreading</h4>
+<p>DOD (Data Oriented Design) has a big benefit when it comes to separation of concerns and multithreading. Classically, OOP struggles to take full advantage of multithreading sometimes - differenet components may be using the same data and there may be conflicts, making working on multiple threads much harder.</p>
+<p>In DOD and ECS especially, it can be a lot easier splitting functionality into different threads.</p>
+<blockquote>
+<p>Maybe in the benchmark game, the people simulation is done on one thread, whilst the ship simulation is done on another. Then the master thread combines the result at the end of each frame/simulation tick?</p>
+</blockquote>
+<h3 id="unity-dots-1">Unity DOTS</h3>
+<p>Unity DOTS brings in the C# Job System. From their Unity DOTS book, the C# job system is described with the following:</p>
+<p>&quot;</p>
+<ul>
+<li>The job system maintains a pool of worker threads, one for each additional core of the
+target platform. For example, when Unity runs on eight cores, it creates one main thread
+and seven worker threads.</li>
+<li>The worker threads execute units of work called jobs. When a worker thread is idle, it
+pulls the next available job from the job queue to execute.</li>
+<li>Once a job starts execution on a worker thread, it runs to completion (in other words,
+jobs are not preempted).
+&quot; (page 10)</li>
+</ul>
+<p>Example code:</p>
+<pre><code class="lang-c#">// A simple example job that multiplies the
+// elements of two arrays.
+// Implementing IJob makes this struct a job type.
+struct MyJob : IJob
+{
+    // A NativeArray is “unmanaged”, meaning it
+    // isn’t garbage collected.
+    public NativeArray&lt;float&gt; Input;
+    public NativeArray&lt;float&gt; Output;
+    // The Execute method is called when the
+    // job system executes this job.
+    public void Execute()
+    {
+        // Multiply every value in Output by the
+        // corresponding value in the Input array.
+        for (int i = 0; i &lt; Input.Length; i++)
+        {
+            Output[i] *= Input[i];
+        }
+    }   
+</code></pre>
+<p>The C# Jobs System is mainly a way for users to perform calculations and processes in a multithreaded way, because generally C# and Unity encourage single-threaded design - that's just what they were made for and that's why they're so easy. Everything gets garbage collected for you.</p>
+<p>A common downfall when it comes to performance is methods having to be loaded from memory many times, if there is one object type that is spawned a lot in the game. As an example, bullets - these often have classes on each one, and when methods run on each bullet, they have to be loaded from memory. Once we have a couple hundred bullets loaded, a couple hundred methods have had to be loaded, and these bullets are transient, meaning they spawn and despawn and respawn yet again, almost in an endless cycle.
+One solution to this that is a common fix is object pooling - instead of creating a bullet and then destroying it, we would like to create the bullets at load time, and then re-use them when necessary. If a bullet is no longer used, we can deactivate it and hide it, instead of removing it. This keeps the bullet in memory and removes the need for loading it and its methods from scratch.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Green-Walnut-Games/Millia2D/blob/22/merge/report/research/performance.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
