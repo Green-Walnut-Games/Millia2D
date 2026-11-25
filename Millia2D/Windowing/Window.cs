@@ -1,4 +1,3 @@
-using Millia2D.Windowing;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
