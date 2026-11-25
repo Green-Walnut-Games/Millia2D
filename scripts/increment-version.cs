@@ -1,13 +1,13 @@
 using System.Xml.Linq;
 
-string prName = Environment.GetEnvironmentVariable("PR_NAME");
+string prName = Environment.GetEnvironmentVariable("PR_NAME").ToLower();
 int major,
     minor,
     patch;
 
 if (prName.Contains("chore: Autopublish"))
 {
-    Environment.Exit(1);
+    Environment.Exit(67);
 }
 
 string csProjPath = "Millia2D/Millia2D.csproj";
@@ -28,12 +28,13 @@ string prefix = prNameParts[0];
 
 if (!prName.Contains(":"))
 {
+    Console.WriteLine("Unexpected PR title format.");
     Environment.Exit(1);
 }
 
-if (prName.Contains("chore:"))
+if (prName.Contains("chore:") || prName.Contains("docs:"))
 {
-    Environment.Exit(1);
+    Environment.Exit(67);
 }
 else if (prName.Contains("!"))
 {

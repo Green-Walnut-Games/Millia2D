@@ -18,20 +18,38 @@ jobs:
       with:
         dotnet-version: 8.x
     - name: Semver Script
-      run: dotnet run scripts/increment-version.cs
+      id: semver
+      run: |
+        set +e
+        dotnet run scripts/increment-version.cs
+        exit_code=$?
+        set -e
+
+        if [ "$exit_code" -eq 67]; then
+          echo "skip=true" >> "$GITHUB_OUTPUT"
+          echo "No version bump needed."
+        elif [ "$exit_code" -ne 0 ]; then
+          exit "$exit_code"
+        else
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+        fi
       env:
         PR_NAME: "${{ github.event.head_commit.message }}"
     - name: Commit & Push version change
+      if: steps.semver.outputs.skip != 'true'
       uses: actions-js/push@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        message: "chore: Autopublish ${{ env.FINAL_VERSION }}"
+        message: "chore: Autopublish ${{ env.FINAL_VERSION }} [skip ci]"
     - name: Pack
+      if: steps.semver.outputs.skip != 'true'
       run: dotnet pack
     - name: NuGet login
+      if: steps.semver.outputs.skip != 'true'
       uses: NuGet/login@v1
       id: login
       with:
         user: ${{ secrets.NUGET_USER }}
     - name: NuGet push
+      if: steps.semver.outputs.skip != 'true'
       run: dotnet nuget push Millia2D/bin/Release/Millia2D.${{ env.FINAL_VERSION }}.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
