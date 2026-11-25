@@ -1,4 +1,3 @@
-using System.Reflection.Metadata.Ecma335;
 using System.Xml.Linq;
 
 string prName = Environment.GetEnvironmentVariable("PR_NAME").ToLower();
