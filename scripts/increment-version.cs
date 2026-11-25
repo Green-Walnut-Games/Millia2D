@@ -62,6 +62,7 @@ versionElement.Value = finalVersion;
 doc.Save(csProjPath);
 
 File.AppendAllText(githubEnvPath, $"FINAL_VERSION={finalVersion}{Environment.NewLine}");
+File.AppendAllText(githubEnvPath, "skip=false\n");
 
 void Skip()
 {
