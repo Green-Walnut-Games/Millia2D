@@ -35,7 +35,7 @@ if (!prName.Contains(":"))
     Environment.Exit(1);
 }
 
-if (prName.Contains("chore:") || prName.Contains("docs:"))
+if (prName.Contains("chore:") || prName.Contains("docs:") || prName.Contains("ci:"))
 {
     Skip();
 }
