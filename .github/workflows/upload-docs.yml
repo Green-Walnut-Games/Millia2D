@@ -10,7 +10,7 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
   
 jobs:
   publish-docs:
@@ -25,10 +25,8 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.x
-
     - run: dotnet tool update -g docfx
     - run: docfx docfx.json
-
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:

@@ -1,0 +1,37 @@
+on:
+  pull_request:
+      types: [opened, synchronize, reopened]
+
+permissions:
+  actions: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: preview-pages-${{ github.ref }}
+  cancel-in-progress: true
+  
+jobs:
+  publish-docs-preview:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Dotnet Setup
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.x
+    - run: dotnet tool update -g docfx
+    - run: docfx docfx.json
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        # Upload entire repository
+        path: '_site'
+    - name: Preview pages
+      uses: rajyan/preview-pages@v1
+      with:
+        source-dir: '_site'
