@@ -12,6 +12,9 @@ concurrency:
   
 jobs:
   publish-docs-preview:
+    environment: 
+      name: docs-preview
+      url: https://green-walnut-games.github.io/Millia2D/${{ github.head_ref}}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
