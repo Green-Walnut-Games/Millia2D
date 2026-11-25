@@ -14,7 +14,7 @@ jobs:
   publish-docs-preview:
     environment: 
       name: docs-preview
-      url: ${{ steps.preview.pages-url }}
+      url: ${{ steps.preview.outputs.pages-url }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
