@@ -7,6 +7,10 @@ on:
 permissions:
     actions: read
 
+concurrency:
+    group: testing-${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
     testing:
         runs-on: ubuntu-latest
