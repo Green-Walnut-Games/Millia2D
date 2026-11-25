@@ -1,0 +1,35 @@
+name: Upload docs preview
+
+on:
+    pull_request:
+        types: [opened, synchronize, reopened]
+
+permissions:
+    contents: write
+    pull-requests: write
+
+concurrency:
+    group: preview-pages-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    publish-docs-preview:
+        environment:
+            name: docs-preview
+            url: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${{ github.event.pull_request.number }}/${{ github.sha }}/
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Dotnet Setup
+              uses: actions/setup-dotnet@v3
+              with:
+                  dotnet-version: 8.x
+            - run: dotnet tool update -g docfx
+            - run: docfx docfx.json
+            - name: Preview pages
+              id: preview
+              uses: rajyan/preview-pages@v1
+              with:
+                  source-dir: "_site"
+                  pr-comment: none

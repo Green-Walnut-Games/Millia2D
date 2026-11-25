@@ -1,37 +1,44 @@
+name: Release
+
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 permissions:
-  contents: write
-  id-token: write
-  
+    contents: write
+    id-token: write
+
 jobs:
-  release:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Dotnet Setup
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 8.x
-    - name: Semver Script
-      run: dotnet run scripts/increment-version.cs
-      env:
-        PR_NAME: "${{ github.event.head_commit.message }}"
-    - name: Commit & Push version change
-      uses: actions-js/push@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        message: "chore: Autopublish ${{ env.FINAL_VERSION }}"
-    - name: Pack
-      run: dotnet pack
-    - name: NuGet login
-      uses: NuGet/login@v1
-      id: login
-      with:
-        user: ${{ secrets.NUGET_USER }}
-    - name: NuGet push
-      run: dotnet nuget push Millia2D/bin/Release/Millia2D.${{ env.FINAL_VERSION }}.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+    release:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Dotnet Setup
+              uses: actions/setup-dotnet@v3
+              with:
+                  dotnet-version: 8.x
+            - name: Semver Script
+              id: semver
+              run: dotnet run scripts/increment-version.cs
+              env:
+                  PR_NAME: "${{ github.event.head_commit.message }}"
+            - name: Commit & Push version change
+              if: steps.semver.outputs.skip != 'true'
+              uses: actions-js/push@master
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  message: "chore: Autopublish ${{ env.FINAL_VERSION }} [skip ci]"
+            - name: Pack
+              if: steps.semver.outputs.skip != 'true'
+              run: dotnet pack
+            - name: NuGet login
+              if: steps.semver.outputs.skip != 'true'
+              uses: NuGet/login@v1
+              id: login
+              with:
+                  user: ${{ secrets.NUGET_USER }}
+            - name: NuGet push
+              if: steps.semver.outputs.skip != 'true'
+              run: dotnet nuget push Millia2D/bin/Release/Millia2D.${{ env.FINAL_VERSION }}.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json

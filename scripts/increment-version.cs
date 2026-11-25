@@ -1,13 +1,13 @@
 using System.Xml.Linq;
 
-string prName = Environment.GetEnvironmentVariable("PR_NAME");
+string prName = Environment.GetEnvironmentVariable("PR_NAME").ToLower();
 int major,
     minor,
     patch;
 
 if (prName.Contains("chore: Autopublish"))
 {
-    Environment.Exit(1);
+    Skip();
 }
 
 string csProjPath = "Millia2D/Millia2D.csproj";
@@ -28,12 +28,13 @@ string prefix = prNameParts[0];
 
 if (!prName.Contains(":"))
 {
+    Console.WriteLine("Unexpected PR title format.");
     Environment.Exit(1);
 }
 
-if (prName.Contains("chore:"))
+if (prName.Contains("chore:") || prName.Contains("docs:"))
 {
-    Environment.Exit(1);
+    Skip();
 }
 else if (prName.Contains("!"))
 {
@@ -43,12 +44,12 @@ else if (prName.Contains("!"))
 }
 else
 {
-    if (prefix.ToLower().Contains("feat"))
+    if (prefix.Contains("feat"))
     {
         minor++;
         patch = 0;
     }
-    else if (prefix.ToLower().Contains("fix"))
+    else if (prefix.Contains("fix"))
     {
         patch++;
     }
@@ -62,4 +63,10 @@ string githubEnvPath = Environment.GetEnvironmentVariable("GITHUB_ENV");
 if (!string.IsNullOrEmpty(githubEnvPath))
 {
     File.AppendAllText(githubEnvPath, $"FINAL_VERSION={finalVersion}{Environment.NewLine}");
+}
+
+void Skip()
+{
+    File.AppendAllText(githubEnvPath, "skip=true\n");
+    return 0;
 }
