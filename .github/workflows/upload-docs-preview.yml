@@ -29,3 +29,4 @@ jobs:
       uses: rajyan/preview-pages@v1
       with:
         source-dir: '_site'
+        pr-comment: none
