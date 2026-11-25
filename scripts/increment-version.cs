@@ -45,12 +45,12 @@ else if (prName.Contains("!"))
 }
 else
 {
-    if (prefix.ToLower().Contains("feat"))
+    if (prefix.Contains("feat"))
     {
         minor++;
         patch = 0;
     }
-    else if (prefix.ToLower().Contains("fix"))
+    else if (prefix.Contains("fix"))
     {
         patch++;
     }
