@@ -10,9 +10,12 @@
         "source.fixAll": "explicit",
         "source.fixAll.dotnet": "explicit"
     },
+    "dotnet.projects.enableFileBasedPrograms": true,
+    "dotnet.projects.enableFileBasedProgramsWhenAmbiguous": true,
     "[csharp]": {
         "editor.defaultFormatter": "csharpier.csharpier-vscode",
-        "editor.codeActionsOnSave": ["source.organizeImports", "source.fixAll"]
+        "editor.codeActionsOnSave": ["source.organizeImports", "source.fixAll"],
+        
     },
     "[github-actions-workflow]": {
         "editor.insertSpaces": true,

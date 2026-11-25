@@ -5,6 +5,8 @@ int major,
     minor,
     patch;
 
+string githubEnvPath = Environment.GetEnvironmentVariable("GITHUB_ENV");
+
 if (prName.Contains("chore: Autopublish"))
 {
     Skip();
@@ -59,14 +61,10 @@ string finalVersion = $"{major}.{minor}.{patch}";
 versionElement.Value = finalVersion;
 doc.Save(csProjPath);
 
-string githubEnvPath = Environment.GetEnvironmentVariable("GITHUB_ENV");
-if (!string.IsNullOrEmpty(githubEnvPath))
-{
-    File.AppendAllText(githubEnvPath, $"FINAL_VERSION={finalVersion}{Environment.NewLine}");
-}
+File.AppendAllText(githubEnvPath, $"FINAL_VERSION={finalVersion}{Environment.NewLine}");
 
 void Skip()
 {
     File.AppendAllText(githubEnvPath, "skip=true\n");
-    return 0;
+    Environment.Exit(0);
 }
