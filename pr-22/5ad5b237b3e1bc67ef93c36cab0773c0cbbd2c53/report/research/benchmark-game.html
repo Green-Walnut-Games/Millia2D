@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Solar System Defense | millia2d </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Solar System Defense | millia2d ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Green-Walnut-Games/Millia2D/blob/22/merge/report/research/benchmark-game.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../logo.svg" alt="millia2d">
+            millia2d
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="solar-system-defense">Solar System Defense</h1>
+
+<p>Our solar system is under attack. You have been put in charge of the United Earth Initiative, and must spend resources wisely in order to protect our territory.</p>
+<h2 id="gameplay">Gameplay</h2>
+<p>Tower defense elements, with auto-battler elements in terms of squads of units. Enemies will become increasingly harder over time. The goal is to see how long you can survive.</p>
+<h3 id="building">Building</h3>
+<p>You are able to build various stations/structures throughout the solar system:</p>
+<ul>
+<li>Shipyard: allows damaged ships to be repaired.</li>
+<li>Depot: allows ships to replenish supplies and ammo.</li>
+<li>Construction yard: allows ships to be created.</li>
+<li>Laser station: fires lasers at nearby enemy ships.</li>
+<li>Torpedo launcher: launches torpedoes at nearby enemy ships.</li>
+<li>Communications satellite: buffs allied ships, and increases building range.</li>
+<li>Colony station: increases population and allows you to build sub-modules inside the station.</li>
+<li>Mineral harvester: harvests minerals and can only be placed around planets.</li>
+</ul>
+<h4 id="colony-building">Colony building</h4>
+<p>Inside each colony, you may build sub-modules:</p>
+<ul>
+<li>Hydroponics: allows faster population growth</li>
+<li>Living quarters: increases max population inside a station</li>
+<li>Merchants' quarters: increases credits profits.</li>
+<li>Research lab: uses scavenged alien technology to improve existing systems.</li>
+<li>War office: increases max ship capacity.</li>
+<li>Admin office: increases maximum colony capacity.</li>
+<li>Clinic: heals individual people.</li>
+</ul>
+<p>These submodules will be built via buttons in the colony station menu, and not be placed individually inside each station. These will basically be numbers.</p>
+<h3 id="units">Units</h3>
+<p>You are able to construct additional ships and vessels from construction yards.</p>
+<ul>
+<li>Repair drone swarm: repairs ships nearby in a radius</li>
+<li>Corvette: launches kinetic projectiles, weak armour</li>
+<li>Destroyer: launches kinetic projectiles and lasers, medium armour</li>
+<li>Cruiser: launches torpedoes.</li>
+<li>Carrier: launches disposable attack drones.</li>
+<li>Titan: massive long-range laser beam.</li>
+</ul>
+<p>Units will automatically group up before an attack, then get into formations and attack any incoming aliens together, without the player's control.???</p>
+<blockquote>
+<p>Not sure if it would be cooler for players to control these.</p>
+</blockquote>
+<h3 id="people">People</h3>
+<p>Each of your staff members is individually simulated. John Garrick may be in charge of running the Clinic, whilst Michelle Key will be commanding your Titan. People will need to travel around the solar system for various things - make sure there are defended routes between each station.</p>
+<p>People will be tracked based on:</p>
+<ul>
+<li>job</li>
+<li>name</li>
+<li>age</li>
+<li>family</li>
+</ul>
+<h3 id="progression">Progression</h3>
+<p>Each run will be split into levels. Each level unlocks a new planet, and more territory to build inside of. Each solar system will be randomly generated, with different planets each time.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Green-Walnut-Games/Millia2D/blob/22/merge/report/research/benchmark-game.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
