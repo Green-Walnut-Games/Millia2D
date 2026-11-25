@@ -5,8 +5,10 @@
 namespace Millia2D;
 
 using Millia2D.Core;
+using Millia2D.Inputs;
 using Millia2D.Profiling;
 using Millia2D.Rendering;
+using OpenTK.Graphics.ES11;
 using OpenTK.Windowing.Common;
 using Windowing;
 
@@ -17,9 +19,11 @@ public class MilliaGame
     public Window Window { get; private set; }
 
     internal Renderer Renderer { get; private set; }
+    internal UIRenderer UIRenderer { get; private set; }
 
     public List<Scene> LoadedScenes { get; private set; } = new();
 
+    // Constructor used for unit tests
     internal MilliaGame()
     {
         Instance = this;
@@ -32,21 +36,27 @@ public class MilliaGame
 
     public MilliaGame(int width = 800, int height = 600, string title = "Millia2D Game")
     {
-        Instance = this;
-        Renderer = new();
-        Window = new Window(width, height, title);
         Log.Init();
+
+        Instance = this;
+        Window = new Window(width, height, title);
+
+        Renderer = new();
+        UIRenderer = new();
+        UIRenderer.Init();
+
+        Init();
+
+        Renderer.OnLoad();
+        UIRenderer.OnLoad();
 
         using (Window.otk_Window)
         {
-            Init();
+            Window.otk_Window.UpdateFrame += UpdateFrame;
+            Window.otk_Window.Run();
 
             Preload();
             Load();
-
-            Window.otk_Window.UpdateFrame += UpdateFrame;
-
-            Window.otk_Window.Run();
         }
 
         Unload();
@@ -129,6 +139,11 @@ public class MilliaGame
     {
         Clock.IncrementTimer(eventArgs.Time);
 
+        if (Window != null)
+        {
+            Input.OnRenderFrame(eventArgs);
+        }
+
         // Handle physics update
         // If more than physics update time has elapsed, we need to run a physics update
         if (
@@ -149,5 +164,10 @@ public class MilliaGame
 
         Update(eventArgs.Time);
         LateUpdate(eventArgs.Time);
+    }
+
+    public void LoadFontFromFile(string path)
+    {
+        UIRenderer.LoadFontFromFile(path);
     }
 }

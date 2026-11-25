@@ -41,7 +41,6 @@ public class Scene
             actor.Components.ToList().ForEach(a => a.Preload());
             actor.Components.ToList().ForEach(a => a.Load());
             actor.hasStarted = true;
-            Log.Info("Started new actor");
         }
     }
 

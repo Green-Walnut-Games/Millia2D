@@ -46,7 +46,6 @@ public class Actor
             component.Preload();
             component.Load();
             component.hasStarted = true;
-            Log.Info("Started new component");
         }
     }
 

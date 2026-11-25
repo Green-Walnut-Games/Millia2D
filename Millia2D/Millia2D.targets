@@ -2,12 +2,17 @@
   <ItemGroup>
     <GameAssets Include="$(MSBuildProjectDirectory)\assets\**\*" />
     <EngineShaders Include="$(MSBuildThisFileDirectory)\assets\shaders\**\*" />
+    <EngineFonts Include="$(MSBuildThisFileDirectory)\assets\fonts\**\*" />
   </ItemGroup>
   <Target Name="CopyGameAssets" BeforeTargets="Build">
     <Message Importance="high" Text="Assets found: @(GameAssets)" />
     <Copy
       SourceFiles="@(EngineShaders)"
-      DestinationFolder="$(TargetDir)\assets\Shaders%(RecursiveDir)"
+      DestinationFolder="$(TargetDir)\assets\shaders%(RecursiveDir)"
+    />
+    <Copy
+      SourceFiles="@(EngineFonts)"
+      DestinationFolder="$(TargetDir)\assets\fonts%(RecursiveDir)"
     />
     <Copy SourceFiles="@(GameAssets)" DestinationFolder="$(TargetDir)\assets\%(RecursiveDir)" />
   </Target>

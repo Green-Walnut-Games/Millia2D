@@ -27,9 +27,6 @@ internal class OTKWindow : GameWindow
             (BlendingFactor)BlendingFactorDest.OneMinusSrcAlpha
         );
 
-        // Renderer onLoad here
-        MilliaGame.Instance.Renderer.OnLoad();
-
         SetupImGui();
     }
 
@@ -68,8 +65,12 @@ internal class OTKWindow : GameWindow
         }
 
         double renderFrameTime = Profiler.MeasureTime(MilliaGame.Instance.Renderer.OnRenderFrame);
-
         EngineTelemetry(renderFrameTime);
+
+        double textRenderFrameTime = Profiler.MeasureTime(
+            MilliaGame.Instance.UIRenderer.OnRenderFrame
+        );
+        EngineTelemetry(textRenderFrameTime);
 
         if (isDebugOpen)
         {

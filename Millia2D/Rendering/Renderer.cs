@@ -1,5 +1,3 @@
-using System.Numerics;
-using Millia2D;
 using Millia2D.Rendering.Shaders;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
