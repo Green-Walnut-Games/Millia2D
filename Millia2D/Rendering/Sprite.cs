@@ -1,5 +1,3 @@
-using Millia2D;
-
 namespace Millia2D.Rendering;
 
 public class Sprite : Component

@@ -17,9 +17,11 @@ public class MilliaGame
     public Window Window { get; private set; }
 
     internal Renderer Renderer { get; private set; }
+    internal TextRenderer TextRenderer { get; private set; }
 
     public List<Scene> LoadedScenes { get; private set; } = new();
 
+    // Constructor used for unit tests
     internal MilliaGame()
     {
         Instance = this;
@@ -32,21 +34,28 @@ public class MilliaGame
 
     public MilliaGame(int width = 800, int height = 600, string title = "Millia2D Game")
     {
-        Instance = this;
-        Renderer = new();
-        Window = new Window(width, height, title);
         Log.Init();
+
+        Instance = this;
+        Window = new Window(width, height, title);
+
+        Renderer = new();
+        TextRenderer = new();
+        TextRenderer.Init();
+
+        Init();
+
+        Renderer.OnLoad();
+        TextRenderer.OnLoad();
 
         using (Window.otk_Window)
         {
-            Init();
+            Window.otk_Window.UpdateFrame += UpdateFrame;
+            Window.otk_Window.Run();
 
             Preload();
+
             Load();
-
-            Window.otk_Window.UpdateFrame += UpdateFrame;
-
-            Window.otk_Window.Run();
         }
 
         Unload();
@@ -149,5 +158,10 @@ public class MilliaGame
 
         Update(eventArgs.Time);
         LateUpdate(eventArgs.Time);
+    }
+
+    public void LoadFontFromFile(string path)
+    {
+        TextRenderer.LoadFontFromFile(path);
     }
 }

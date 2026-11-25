@@ -1,5 +1,5 @@
-using System.Reflection;
 using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
 
 namespace Millia2D.Rendering.Shaders;
 
@@ -99,5 +99,26 @@ public class Shader : IDisposable
     public int GetUniformLocation(string uniformName)
     {
         return GL.GetUniformLocation(Handle, uniformName);
+    }
+
+    internal void Set(string location, Matrix4 matrix)
+    {
+        Use();
+        var x = GetUniformLocation(location);
+        if (x == -1)
+            return;
+
+        GL.UniformMatrix4(x, false, ref matrix);
+    }
+
+    internal void Set(string location, int value)
+    {
+        Use();
+
+        var loc = GetAttribLocation(location);
+        if (loc == -1)
+            return;
+
+        GL.Uniform1(loc, value);
     }
 }

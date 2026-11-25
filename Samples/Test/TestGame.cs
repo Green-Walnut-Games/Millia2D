@@ -1,3 +1,4 @@
+using System.Drawing;
 using Millia2D;
 using Millia2D.Inputs;
 using Millia2D.Logging;
@@ -15,6 +16,9 @@ public class TestGame : MilliaGame
         Input.DefineAxis("Vertical", Keys.W, Keys.S);
 
         Log.SetLogLevel(LogLevel.Info);
+
+        LoadFontFromFile("assets/fonts/massia.ttf");
+
         world = new("World");
 
         Actor circle = new();
@@ -29,7 +33,21 @@ public class TestGame : MilliaGame
         circle.AddComponent(new Circle());
         circle.Transform.Scale = new Vector3(0.2f, 0.2f, 1);
 
+        Actor labelActor = new();
+        labelActor.Transform.Position = new(50, 50);
+        Label label = new();
+        label.Text = "Hello world!";
+        labelActor.AddComponent(label);
+        label.FontFace = "MASSIVE 10 A";
+
+        label.Background = true;
+        label.BackgroundColor = Color.Black;
+        label.BackgroundPadding = 50;
+
+        circle.GetComponent<Circle>().label = label;
+
         world.AddActor(circle);
+        world.AddActor(labelActor);
 
         AddScene(world);
     }
@@ -37,6 +55,7 @@ public class TestGame : MilliaGame
 
 public class Circle : Component
 {
+    public Label label;
     float speed = 0.05f;
 
     Vector3 direction;
@@ -65,6 +84,8 @@ public class Circle : Component
 
             TestGame.world.AddActor(circle);
         }
+
+        label.Text = $"X: {(int)Transform.Position.X} Y: {(int)Transform.Position.Y}";
     }
 
     public override void PhysicsUpdate(double deltaTime)
