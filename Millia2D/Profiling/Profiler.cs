@@ -80,14 +80,12 @@ public static class Profiler
     /// <param name="measurementName"></param>
     /// <param name="action"></param>
     /// <returns>Time taken to perform said action, in ms.</returns>
-    public static double MeasureTime(string measurementName, Action action)
+    public static double MeasureTime(Action action)
     {
         Stopwatch watch = new();
         watch.Start();
         action.Invoke();
         watch.Stop();
-
-        Log.Debug($"{measurementName}, {watch.ElapsedMilliseconds} ms");
 
         return watch.ElapsedMilliseconds;
     }

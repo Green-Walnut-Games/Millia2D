@@ -4,7 +4,6 @@
 
 namespace Millia2D;
 
-using Millia2D;
 using Millia2D.Core;
 using Millia2D.Profiling;
 using Millia2D.Rendering;

@@ -67,10 +67,7 @@ internal class OTKWindow : GameWindow
             isDebugOpen = !isDebugOpen;
         }
 
-        double renderFrameTime = Profiler.MeasureTime(
-            "Game instance render frame",
-            MilliaGame.Instance.Renderer.OnRenderFrame
-        );
+        double renderFrameTime = Profiler.MeasureTime(MilliaGame.Instance.Renderer.OnRenderFrame);
 
         EngineTelemetry(renderFrameTime);
 
