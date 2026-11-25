@@ -13,15 +13,9 @@ using Vector2 = OpenTK.Mathematics.Vector2;
 /// </summary>
 public static class Input
 {
-    internal static void SetupEvents()
-    {
-        MilliaGame.Instance.Window.otk_Window.MouseMove += OnMouseMove;
-    }
-
-    private static void OnMouseMove(MouseMoveEventArgs args)
+    internal static void OnRenderFrame(FrameEventArgs args)
     {
         Vector3 mousePosition = GetMousePosition();
-
         UIRenderer rend = MilliaGame.Instance.UIRenderer;
 
         foreach (Label label in rend.Labels)
@@ -35,11 +29,17 @@ public static class Input
 
             if (!label.IsPositionWithinRect(mousePosition))
             {
-                uiButton.isHovered = false;
+                uiButton.IsHovered = false;
+                uiButton.IsPressed = false;
                 continue;
             }
 
-            uiButton.isHovered = true;
+            uiButton.IsHovered = true;
+
+            if (MilliaGame.Instance.Window.otk_Window.IsMouseButtonReleased(OTKMouseButton.Left))
+            {
+                uiButton.IsPressed = false;
+            }
         }
     }
 
@@ -104,11 +104,6 @@ public static class Input
 
         foreach (Label label in rend.Labels)
         {
-            if (!label.IsPositionWithinRect(mousePressLocation))
-            {
-                continue;
-            }
-
             // Label button has detected a mouse press on its location.
             // How do we cancel event to everything else?
             if (!(label is Button))
@@ -116,8 +111,10 @@ public static class Input
                 continue;
             }
 
-            Button uiButton = label as Button;
-            uiButton.OnPress.Invoke();
+            if (!label.IsPositionWithinRect(mousePressLocation))
+            {
+                continue;
+            }
 
             return false;
         }
@@ -161,6 +158,7 @@ public static class Input
 
             Button uiButton = label as Button;
             uiButton.OnPress.Invoke();
+            uiButton.IsPressed = true;
 
             return false;
         }
@@ -175,9 +173,40 @@ public static class Input
     /// <returns></returns>
     public static bool IsMouseButtonReleased(MouseButton button)
     {
-        return MilliaGame.Instance.Window.otk_Window.IsMouseButtonReleased(
+        bool isButtonReleased = MilliaGame.Instance.Window.otk_Window.IsMouseButtonReleased(
             (OTKMouseButton)(int)button
         );
+
+        if (!isButtonReleased)
+        {
+            return false;
+        }
+
+        UIRenderer rend = MilliaGame.Instance.UIRenderer;
+        Vector3 mousePressLocation = GetMousePosition();
+
+        foreach (Label label in rend.Labels)
+        {
+            if (!label.IsPositionWithinRect(mousePressLocation))
+            {
+                continue;
+            }
+
+            // Label button has detected a mouse press on its location.
+            // How do we cancel event to everything else?
+            if (!(label is Button))
+            {
+                continue;
+            }
+
+            Log.Info($"RELEASING BUTTON");
+            Button uiButton = label as Button;
+            uiButton.IsPressed = false;
+
+            return false;
+        }
+
+        return isButtonReleased;
     }
 
     public static Vector3 GetMousePosition()

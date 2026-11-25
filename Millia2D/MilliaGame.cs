@@ -51,8 +51,6 @@ public class MilliaGame
 
         using (Window.otk_Window)
         {
-            Input.SetupEvents();
-
             Window.otk_Window.UpdateFrame += UpdateFrame;
             Window.otk_Window.Run();
 
@@ -139,6 +137,8 @@ public class MilliaGame
     internal void UpdateFrame(FrameEventArgs eventArgs)
     {
         Clock.IncrementTimer(eventArgs.Time);
+
+        Input.OnRenderFrame(eventArgs);
 
         // Handle physics update
         // If more than physics update time has elapsed, we need to run a physics update

@@ -36,8 +36,8 @@ public class Label : Component
         int topLeftX = (int)Transform.Position.X - BackgroundPadding / 2;
         int topLeftY = (int)Transform.Position.Y - BackgroundPadding / 2;
 
-        int botRightX = (int)Transform.Position.X + BackgroundWidth + BackgroundPadding / 2;
-        int botRightY = (int)Transform.Position.Y + BackgroundHeight + BackgroundPadding / 2;
+        int botRightX = (int)Transform.Position.X + BackgroundWidth - BackgroundPadding / 2;
+        int botRightY = (int)Transform.Position.Y + BackgroundHeight - BackgroundPadding / 2;
 
         if (position.X < topLeftX || position.X > botRightX)
         {

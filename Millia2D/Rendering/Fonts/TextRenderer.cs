@@ -135,12 +135,30 @@ internal class UIRenderer : IDisposable
                     button.HoverColor.A
                 );
 
+                BlurgColor pressedColor = new(
+                    button.PressedColor.R,
+                    button.PressedColor.G,
+                    button.PressedColor.B,
+                    button.PressedColor.A
+                );
+
+                BlurgColor targetColor;
+
+                Log.Info($"Pressed: {button.IsPressed} Hovered: {button.IsHovered}");
+
+                if (button.IsPressed)
+                    targetColor = pressedColor;
+                else if (button.IsHovered && !button.IsPressed)
+                    targetColor = hoverColor;
+                else
+                    targetColor = backgroundColor;
+
                 FillBackground(
                     (int)label.Transform.Position.X - label.BackgroundPadding / 2,
                     (int)label.Transform.Position.Y - label.BackgroundPadding / 2,
                     (int)result.Width + label.BackgroundPadding,
                     (int)result.Height + label.BackgroundPadding,
-                    button.isHovered ? hoverColor : backgroundColor
+                    targetColor
                 );
             }
             else

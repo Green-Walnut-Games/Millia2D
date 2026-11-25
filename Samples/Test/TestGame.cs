@@ -42,6 +42,7 @@ public class TestGame : MilliaGame
         button.Background = true;
         button.BackgroundColor = Color.Black;
         button.BackgroundPadding = 10;
+        button.PressedColor = Color.AliceBlue;
 
         button.OnPress += () => Log.Info("BUTTON HAS BEEN PRESSED");
 
