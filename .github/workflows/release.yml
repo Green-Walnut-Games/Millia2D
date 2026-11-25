@@ -18,7 +18,7 @@ jobs:
             - name: Dotnet Setup
               uses: actions/setup-dotnet@v3
               with:
-                  dotnet-version: 8.x
+                  dotnet-version: 10.x
             - name: Semver Script
               id: semver
               run: dotnet run scripts/increment-version.cs
