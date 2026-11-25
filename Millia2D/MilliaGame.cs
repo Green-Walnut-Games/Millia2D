@@ -8,7 +8,6 @@ using Millia2D.Core;
 using Millia2D.Inputs;
 using Millia2D.Profiling;
 using Millia2D.Rendering;
-using OpenTK.Graphics.ES11;
 using OpenTK.Windowing.Common;
 using Windowing;
 
