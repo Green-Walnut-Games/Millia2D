@@ -14,7 +14,7 @@ jobs:
   publish-docs-preview:
     environment: 
       name: docs-preview
-      url: ${{ steps.preview.outputs.pages-url }}
+      url: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${{ github.event.pull_request.number }}/${{ github.sha }}/
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
