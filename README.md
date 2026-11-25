@@ -12,7 +12,7 @@ Throughout the project, I will be looking at implementing various methods of hel
 
 The first step is to create a game class inheriting from `MilliaGame`, then instantiating your class from wherever you want to use Millia2D.
 
-For more tutorials, check out the [docs](https://green-walnut-games.github.io/Millia2D/) or the [samples](samples/).
+For more tutorials or information, visit the [docs](https://green-walnut-games.github.io/Millia2D/) or the [samples](samples/).
 
 # Installation
 
@@ -24,4 +24,6 @@ dotnet add package Millia2D
 
 # License
 
-Millia2D is licensed under MIT. Check out [The License](LICENSE.md) for more information.
+Millia2D is licensed under MIT. See [The License](LICENSE.md) for more information.
+
+See [Third Party Notices](THIRD_PARTY_NOTICES.md) for information about dependencies.
