@@ -68,7 +68,7 @@ internal class OTKWindow : GameWindow
         EngineTelemetry(renderFrameTime);
 
         double textRenderFrameTime = Profiler.MeasureTime(
-            MilliaGame.Instance.TextRenderer.OnRenderFrame
+            MilliaGame.Instance.UIRenderer.OnRenderFrame
         );
         EngineTelemetry(textRenderFrameTime);
 

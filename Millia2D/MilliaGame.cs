@@ -17,7 +17,7 @@ public class MilliaGame
     public Window Window { get; private set; }
 
     internal Renderer Renderer { get; private set; }
-    internal TextRenderer TextRenderer { get; private set; }
+    internal UIRenderer UIRenderer { get; private set; }
 
     public List<Scene> LoadedScenes { get; private set; } = new();
 
@@ -40,13 +40,13 @@ public class MilliaGame
         Window = new Window(width, height, title);
 
         Renderer = new();
-        TextRenderer = new();
-        TextRenderer.Init();
+        UIRenderer = new();
+        UIRenderer.Init();
 
         Init();
 
         Renderer.OnLoad();
-        TextRenderer.OnLoad();
+        UIRenderer.OnLoad();
 
         using (Window.otk_Window)
         {
@@ -161,6 +161,6 @@ public class MilliaGame
 
     public void LoadFontFromFile(string path)
     {
-        TextRenderer.LoadFontFromFile(path);
+        UIRenderer.LoadFontFromFile(path);
     }
 }

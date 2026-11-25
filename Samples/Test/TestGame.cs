@@ -4,6 +4,7 @@ using Millia2D.Inputs;
 using Millia2D.Logging;
 using Millia2D.Mathematics;
 using Millia2D.Rendering;
+using Millia2D.UI;
 using Math = Millia2D.Mathematics.Math;
 
 public class TestGame : MilliaGame
@@ -33,16 +34,18 @@ public class TestGame : MilliaGame
 
         Actor labelActor = new();
         labelActor.Transform.Position = new(50, 50);
-        Label label = new();
-        label.Text = "Hello world!";
-        labelActor.AddComponent(label);
-        label.FontFace = "MASSIVE 10 A";
+        Button button = new();
+        button.Text = "Hello world!";
+        labelActor.AddComponent(button);
+        button.FontFace = "MASSIVE 10 A";
 
-        label.Background = true;
-        label.BackgroundColor = Color.Black;
-        label.BackgroundPadding = 10;
+        button.Background = true;
+        button.BackgroundColor = Color.Black;
+        button.BackgroundPadding = 10;
 
-        circle.GetComponent<Circle>().label = label;
+        button.OnPress += () => Log.Info("BUTTON HAS BEEN PRESSED");
+
+        circle.GetComponent<Circle>().label = button;
 
         world.AddActor(circle);
         world.AddActor(labelActor);
@@ -65,7 +68,7 @@ public class Circle : Component
         direction.X = (float)Input.GetAxis("Horizontal");
         direction.Y = (float)Input.GetAxis("Vertical");
 
-        if (Input.IsMouseButtonDown(MouseButton.Left))
+        if (Input.IsMouseButtonPressed(MouseButton.Left))
         {
             Actor circle = new();
             circle.Transform.Position = Input.GetWorldCoordinatesFromScreen(

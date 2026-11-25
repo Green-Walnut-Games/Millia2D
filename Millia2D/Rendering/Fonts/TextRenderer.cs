@@ -1,11 +1,12 @@
 using BlurgText;
 using Millia2D;
 using Millia2D.Rendering.Shaders;
+using Millia2D.UI;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using Vector3 = Millia2D.Mathematics.Vector3;
 
-internal class TextRenderer : IDisposable
+internal class UIRenderer : IDisposable
 {
     public HashSet<Label> Labels { get; private set; } = new();
 
@@ -114,9 +115,15 @@ internal class TextRenderer : IDisposable
         }
 
         BlurgResult result = blurg.BuildString(font, (float)label.Size, color, label.Text);
+        System.Numerics.Vector2 textSize = blurg.MeasureString(font, (float)label.Size, label.Text);
+        label.Width = (int)textSize.X;
+        label.Height = (int)textSize.Y;
 
         if (label.Background)
         {
+            label.BackgroundWidth = label.Width + label.BackgroundPadding;
+            label.BackgroundHeight = label.Height + label.BackgroundPadding;
+
             FillBackground(
                 (int)label.Transform.Position.X - label.BackgroundPadding / 2,
                 (int)label.Transform.Position.Y - label.BackgroundPadding / 2,
