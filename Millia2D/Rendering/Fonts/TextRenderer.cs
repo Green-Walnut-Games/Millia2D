@@ -31,7 +31,7 @@ internal class TextRenderer : IDisposable
     {
         foreach (var pair in LoadedFonts)
         {
-            Log.Info($"Loaded font: {pair.Key}");
+            Log.Debug($"Loaded font: {pair.Key}");
         }
 
         shader = new("assets/shaders/font-shader.vert", "assets/shaders/font-shader.frag");

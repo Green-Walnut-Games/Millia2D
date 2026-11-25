@@ -54,7 +54,6 @@ public class MilliaGame
             Window.otk_Window.Run();
 
             Preload();
-
             Load();
         }
 

@@ -1,7 +1,6 @@
-using Millia2D;
-
 namespace Millia2D.Mathematics;
 
+// TODO: Do we need a separate transform for UI components?
 public class Transform : Component
 {
     public Vector3 Position { get; set; } = new();

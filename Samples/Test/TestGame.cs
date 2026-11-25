@@ -24,8 +24,6 @@ public class TestGame : MilliaGame
         Actor circle = new();
         circle.Transform.Position = new Vector3(2, 2);
 
-        Log.Info(circle.Transform.Position.ToString());
-
         Sprite circleSprite = new();
         Texture circleTexture = new("assets/circle.png");
         circleSprite.Texture = circleTexture;
@@ -42,7 +40,7 @@ public class TestGame : MilliaGame
 
         label.Background = true;
         label.BackgroundColor = Color.Black;
-        label.BackgroundPadding = 50;
+        label.BackgroundPadding = 10;
 
         circle.GetComponent<Circle>().label = label;
 
@@ -73,8 +71,6 @@ public class Circle : Component
             circle.Transform.Position = Input.GetWorldCoordinatesFromScreen(
                 Input.GetMousePosition()
             );
-
-            Log.Info(circle.Transform.Position.ToString());
 
             Texture circleTexture = new("assets/circle.png");
             Sprite circleSprite = new();
