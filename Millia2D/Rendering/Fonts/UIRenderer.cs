@@ -6,6 +6,9 @@ using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using Vector3 = Millia2D.Mathematics.Vector3;
 
+// https://github.com/CallumDev/blurgtext/tree/main/dotnet/BlurgSample
+// This code is taking heavy inspiration from CallumDev inside `blurgtext` found above
+
 internal class UIRenderer : IDisposable
 {
     public HashSet<Label> Labels { get; private set; } = new();
