@@ -70,8 +70,12 @@ public class Transform : Component
 
     public void RemoveChild(Transform child)
     {
+        Vector3 finalPosition = child.Parent.Position + child.LocalPosition;
+
         Children.Remove(child);
         child.Parent = null;
+
+        child.Position = finalPosition;
     }
 
     public Transform GetChild(int index)

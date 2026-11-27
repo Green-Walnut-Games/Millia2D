@@ -86,6 +86,28 @@ public class Circle : Component
             Transform.AddChild(circle.Transform);
         }
 
+        if (Transform.Children.Count > 0)
+        {
+            if (Input.IsMouseButtonPressed(MouseButton.Right))
+            {
+                Transform.RemoveChild(Transform.Children[0]);
+            }
+
+            if (Input.IsKeyPressed(Keys.Space))
+            {
+                Transform.Children[0].LocalPosition = Input.GetWorldCoordinatesFromScreen(
+                    Input.GetMousePosition()
+                );
+            }
+
+            if (Input.IsKeyPressed(Keys.Q))
+            {
+                Transform.Children[0].Position = Input.GetWorldCoordinatesFromScreen(
+                    Input.GetMousePosition()
+                );
+            }
+        }
+
         label.Text = $"X: {(int)Transform.Position.X} Y: {(int)Transform.Position.Y}";
     }
 
