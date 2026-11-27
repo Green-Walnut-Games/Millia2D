@@ -83,6 +83,7 @@ public class Circle : Component
             circle.Transform.Scale = new Vector3(0.2f, 0.2f, 1);
 
             TestGame.world.AddActor(circle);
+            Transform.AddChild(circle.Transform);
         }
 
         label.Text = $"X: {(int)Transform.Position.X} Y: {(int)Transform.Position.Y}";
