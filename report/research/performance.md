@@ -2,6 +2,18 @@
 
 A performance target I could aim for is 60fps for ~100,000 actors in the scene.
 
+TODO: Try come up with more evaluation metrics/performance targets, especially for things like performance graphs.
+
+## Evaluation Metrics
+
+There is no single evaluation metric which can be created to easily compare game engines. Due to the nature of game engines, a "good" developer may make a game with amazing performance, whilst a "bad" developer may make the same game with much worse performance, but on the same engine.
+
+It is easier to compare engines based on the difficulty, or the process, of setting up specific game scenarios and game designs. For instance, with Unity, you have to learn and understand the Unity DOTS package in order to fully take advantage of it, and because it is such a massive subject, that can be quite difficult.
+
+Where Millia2D can shine is in the ease of creating a simulation-based game. If the engine is focused and the API is focused to deliver good enough results, it may have a reason of existing.
+
+Since the performance of a game in any engine depends on the developers' proficiency with that game engine and hardware, Millia2D should focus on clean, easy to use APIs and less so on raw strength. We can still compare things like frame time or FPS between similar scenarios, but the main target should be to create an engine which is usable and approachable.
+
 ## Entity Component System
 
 An ECS will be a data oriented system which acts upon all entities of the same type at once, instead of each entity performing its own calculation.

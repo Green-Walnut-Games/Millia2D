@@ -147,8 +147,6 @@ internal class UIRenderer : IDisposable
 
                 BlurgColor targetColor;
 
-                Log.Info($"Pressed: {button.IsPressed} Hovered: {button.IsHovered}");
-
                 if (button.IsPressed)
                     targetColor = pressedColor;
                 else if (button.IsHovered && !button.IsPressed)

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using ImGuiNET;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
@@ -473,10 +467,6 @@ internal static unsafe class ImguiImplOpenTK4
                     return MouseCursor.ResizeNS;
                 case ImGuiMouseCursor.ResizeEW:
                     return MouseCursor.ResizeEW;
-                case ImGuiMouseCursor.ResizeNESW:
-                    return MouseCursor.ResizeNESW;
-                case ImGuiMouseCursor.ResizeNWSE:
-                    return MouseCursor.ResizeNWSE;
                 case ImGuiMouseCursor.Hand:
                     return MouseCursor.PointingHand;
                 case ImGuiMouseCursor.NotAllowed:

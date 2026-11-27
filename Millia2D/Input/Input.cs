@@ -199,7 +199,6 @@ public static class Input
                 continue;
             }
 
-            Log.Info($"RELEASING BUTTON");
             Button uiButton = label as Button;
             uiButton.IsPressed = false;
 
