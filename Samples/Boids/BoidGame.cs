@@ -15,7 +15,7 @@ public class BoidGame : MilliaGame
         Random rnd = new();
 
         // Set up boids here.
-        int numberOfBoids = 100;
+        int numberOfBoids = 300;
 
         for (int i = 0; i < numberOfBoids; i++)
         {
@@ -53,14 +53,14 @@ public class Boid : Component
     public Vector3 velocity { get; private set; } = new();
     public float separationRange = 2f;
     public float cohesionRange = 5f;
-    public float alignmentRange = 16f;
+    public float alignmentRange = 7f;
 
     Vector3 separation = new();
-    float separationStrength = 36.8f;
+    float separationStrength = 100f;
     Vector3 cohesion = new();
     float cohesionStrength = 7.5f;
     Vector3 alignment = new();
-    float alignmentStrength = 55f;
+    float alignmentStrength = 200f;
     Vector3 toMouse = new();
     float toMouseStrength = 10f;
     float maxValue = 0.3f;
