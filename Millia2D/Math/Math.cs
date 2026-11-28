@@ -1,6 +1,6 @@
 namespace Millia2D.Mathematics;
 
-public static class Math
+public static class MMath
 {
     public static float Lerp(float first, float second, float time)
     {

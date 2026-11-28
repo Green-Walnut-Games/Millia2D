@@ -3,7 +3,7 @@
     <Project Path="Millia2D/Millia2D.csproj" />
   </Folder>
   <Folder Name="/Samples/">
-    <Project Path="Samples/SolarSystemGame/SolarSystemGame.csproj" />
+    <Project Path="Samples/Boids/SolarSystemGame.csproj" />
   </Folder>
   <Folder Name="/Samples/Test/">
     <Project Path="Samples/Test/test.csproj" />

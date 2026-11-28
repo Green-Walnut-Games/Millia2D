@@ -149,13 +149,13 @@ public class MilliaGame
             || Clock.totalElapsedTime - lastPhysicsTime >= Clock.PhysicsUpdateTime
         )
         {
-            lastPhysicsTime = Clock.totalElapsedTime;
-
             // If time elapsed is more than the physics update time, we update by the difference.
             // This means that if a long time passes between updating physics, when we do get to updating it,
             // we update it by however much time had passed.
             double physicsDeltaTime = Clock.totalElapsedTime - lastPhysicsTime;
             PhysicsUpdate(physicsDeltaTime);
+
+            lastPhysicsTime = Clock.totalElapsedTime;
         }
 
         Profiler.AddFrameTimeValue((float)eventArgs.Time);

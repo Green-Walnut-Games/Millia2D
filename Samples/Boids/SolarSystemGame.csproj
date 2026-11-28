@@ -9,4 +9,5 @@
   <ItemGroup>
     <ProjectReference Include="../../Millia2D/Millia2D.csproj" />
   </ItemGroup>
+  <Import Project="../../Millia2D\Millia2D.targets" />
 </Project>

@@ -1,6 +1,7 @@
 namespace Millia2D;
 
 using Millia2D.Logging;
+using Millia2D.Mathematics;
 using Millia2D.Profiling;
 using Serilog;
 using Serilog.Core;
@@ -52,12 +53,12 @@ public static class Log
         Profiler.AddLiveMeasurement(message, value, Profiler.LiveMeasurements);
     }
 
-    public static void LiveData(string message, double value)
+    public static void LiveData(string message, object value)
     {
         Profiler.AddLiveData(message, value, Profiler.LiveData);
     }
 
-    internal static void LiveDataEngine(string message, double value)
+    internal static void LiveDataEngine(string message, object value)
     {
         Profiler.AddLiveData(message, value, Profiler.EngineLiveData);
     }

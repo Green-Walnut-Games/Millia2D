@@ -35,7 +35,7 @@ internal class DebugWindow
         ImGui.End();
     }
 
-    private void ShowLiveData(Dictionary<string, double> target)
+    private void ShowLiveData(Dictionary<string, object> target)
     {
         if (target.Count > 0)
         {

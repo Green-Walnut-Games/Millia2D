@@ -1,6 +1,7 @@
 using Dear_ImGui_Sample.Backends;
 using ImGuiNET;
 using Millia2D.Inputs;
+using Millia2D.Mathematics;
 using Millia2D.Profiling;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Common;
@@ -84,8 +85,11 @@ internal class OTKWindow : GameWindow
 
     private static void EngineTelemetry(double renderFrameTime)
     {
-        Log.LiveDataEngine($"Mouse position X: ", Input.GetMousePosition().X);
-        Log.LiveDataEngine($"Mouse position Y: ", Input.GetMousePosition().Y);
+        Vector3 screenCoordinates = Input.GetMousePosition();
+        Log.LiveDataEngine($"Mouse position: ", Input.GetMousePosition());
+
+        Vector3 worldCoordinates = Input.GetWorldCoordinatesFromScreen(screenCoordinates);
+        Log.LiveDataEngine($"World Mouse position: ", worldCoordinates);
 
         Log.LiveMeasurementEngine("Render frame time", renderFrameTime);
         Log.LiveMeasurementEngine(

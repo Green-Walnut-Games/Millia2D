@@ -5,7 +5,7 @@ using Millia2D.Logging;
 using Millia2D.Mathematics;
 using Millia2D.Rendering;
 using Millia2D.UI;
-using Math = Millia2D.Mathematics.Math;
+using MMath = Millia2D.Mathematics.MMath;
 
 public class TestGame : MilliaGame
 {
@@ -115,7 +115,7 @@ public class Circle : Component
     {
         base.PhysicsUpdate(deltaTime);
 
-        Transform.Position = Math.Lerp(
+        Transform.Position = MMath.Lerp(
             Transform.Position,
             Transform.Position + direction * speed,
             1

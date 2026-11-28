@@ -1,3 +1,4 @@
+using Millia2D.Rendering;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
@@ -27,5 +28,10 @@ public class Window
     {
         otk_Window.Dispose();
         otk_Window.Close();
+    }
+
+    public void SetHeight(float height)
+    {
+        Renderer.gameHeight = height;
     }
 }

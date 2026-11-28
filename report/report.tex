@@ -9,6 +9,29 @@
 
 Hello \cite{DocFX} and \cite{Gregory2014Game}. Harkonen is \cite{harkonen2019advantages}
 
+\section{Benchmark Game}
+
+The first benchmark will be a boids simulation.
+This will test some basic many-agent performance metrics with some relatively basic rules.
+
+\subsection{"Boids"}
+
+"Boids" is the name of the algorithm simulating emergent flocking behaviour often seen in birds or other animals.
+This simulation is composed of a few simple rules which each "boid", or individual, follows.
+They create the "emergent" patterns observed in nature, patterns which are not hardcoded or designated by themselves.
+
+The rules are as follows:
+\begin{itemize}
+    \item Separation - steer to avoid crowding local flockmates
+    \item Alignment - steer towards the direction of local flockmates.
+          This encourages neighbours to align their direction together
+    \item Cohesion - steer towards the local centre of mass of local flockmates.
+          This encourages neighbours to move closer together.
+\end{itemize}
+
+This algorithm is good for benchmarking basic many-agent simulations because it requires the boids to interact with each other
+every frame, and we can directly measure perforance relative to the number of boids active.
+
 \bibliographystyle{plain}
 \bibliography{references}
 

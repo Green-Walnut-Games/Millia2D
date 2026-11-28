@@ -30,6 +30,7 @@ public class Actor
     {
         GUID = Guid.NewGuid();
         ActorName = actorName;
+        Transform.Actor = this;
     }
 
     /// <summary>

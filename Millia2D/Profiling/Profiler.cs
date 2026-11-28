@@ -128,13 +128,13 @@ public static class Profiler
         }
     }
 
-    internal static Dictionary<string, double> LiveData = new();
-    internal static Dictionary<string, double> EngineLiveData = new();
+    internal static Dictionary<string, object> LiveData = new();
+    internal static Dictionary<string, object> EngineLiveData = new();
 
     internal static void AddLiveData(
         string message,
-        double value,
-        Dictionary<string, double> target
+        object value,
+        Dictionary<string, object> target
     )
     {
         if (target.ContainsKey(message))

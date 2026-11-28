@@ -56,10 +56,10 @@ internal class Renderer
 
     internal void OnLoad()
     {
-        ColorShader = new("assets/Shaders/color-shader.vert", "assets/Shaders/color-shader.frag");
+        ColorShader = new("assets/shaders/color-shader.vert", "assets/shaders/color-shader.frag");
         TextureShader = new(
-            "assets/Shaders/texture-shader.vert",
-            "assets/Shaders/texture-shader.frag"
+            "assets/shaders/texture-shader.vert",
+            "assets/shaders/texture-shader.frag"
         );
 
         VertexBufferObject = GL.GenBuffer();
@@ -116,11 +116,10 @@ internal class Renderer
     static Matrix4 view;
     static float windowWidth;
     static float windowHeight;
+    internal static float gameHeight = 10;
 
     internal void OnRenderFrame()
     {
-        float gameHeight = 10;
-
         // Use client size instead of window height in order to get true accurate size of playable area
         windowHeight = MilliaGame.Instance.Window.otk_Window.ClientSize.Y;
         windowWidth = MilliaGame.Instance.Window.otk_Window.ClientSize.X;
