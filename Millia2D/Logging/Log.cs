@@ -1,7 +1,6 @@
 namespace Millia2D;
 
 using Millia2D.Logging;
-using Millia2D.Mathematics;
 using Millia2D.Profiling;
 using Serilog;
 using Serilog.Core;
